@@ -72,3 +72,26 @@ button {
   background-color: #333;
   color: white;
 }
+
+.number {
+  background-color: #666;
+  color: white;
+}
+
+.operator {
+  background-color: #ff9500;
+  color: white;
+}
+
+.function {
+  background-color: #a6a6a6;
+  color: black;
+}
+
+.zero {
+  grid-column: span 2;
+}
+
+button:hover {
+  opacity: 0.8;
+}

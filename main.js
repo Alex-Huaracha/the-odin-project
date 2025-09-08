@@ -16,11 +16,19 @@ function createButtons() {
     row.forEach((buttonText) => {
       const button = document.createElement('button');
       button.textContent = buttonText;
+      button.className = getButtonClass(buttonText);
       rowDiv.appendChild(button);
     });
 
     buttonsContainer.appendChild(rowDiv);
   });
+}
+
+function getButtonClass(text) {
+  if (['÷', '×', '-', '+', '='].includes(text)) return 'operator';
+  if (['C', '±', '%'].includes(text)) return 'function';
+  if (text === '0') return 'zero';
+  return 'number';
 }
 
 createButtons();
