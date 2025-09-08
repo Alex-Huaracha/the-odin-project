@@ -1,3 +1,46 @@
+// Const button configuration
+const buttonConfig = [
+  ['AC', '( )', '%', '÷'],
+  ['7', '8', '9', '×'],
+  ['4', '5', '6', '-'],
+  ['1', '2', '3', '+'],
+  ['0', '.', '⌫', '='],
+];
+
+const keyMappings = {
+  0: '0',
+  1: '1',
+  2: '2',
+  3: '3',
+  4: '4',
+  5: '5',
+  6: '6',
+  7: '7',
+  8: '8',
+  9: '9',
+  '+': '+',
+  '-': '-',
+  '*': '×',
+  '/': '÷',
+  Enter: '=',
+  '=': '=',
+  Escape: 'AC',
+  c: 'AC',
+  C: 'AC',
+  Backspace: '⌫',
+  '.': '.',
+  '%': '%',
+};
+
+// Global variables and DOM elements
+let firstNumber = '';
+let operator = '';
+let secondNumber = '';
+let waitingForNewNumber = false;
+
+const display = document.getElementById('display');
+const buttonsContainer = document.querySelector('.buttons');
+
 // Basic arithmetic functions
 function add(a, b) {
   return a + b;
@@ -47,37 +90,13 @@ function operate(operator, a, b) {
   return result;
 }
 
-let firstNumber = '';
-let operator = '';
-let secondNumber = '';
-let waitingForNewNumber = false;
+// Utility functions
+function isNumber(value) {
+  return !isNaN(value) && value !== '.';
+}
 
-const display = document.getElementById('display');
-const buttonsContainer = document.querySelector('.buttons');
-
-const buttonConfig = [
-  ['AC', '( )', '%', '÷'],
-  ['7', '8', '9', '×'],
-  ['4', '5', '6', '-'],
-  ['1', '2', '3', '+'],
-  ['0', '.', '⌫', '='],
-];
-
-function createButtons() {
-  buttonConfig.forEach((row) => {
-    const rowDiv = document.createElement('div');
-    rowDiv.className = 'button-row';
-
-    row.forEach((buttonText) => {
-      const button = document.createElement('button');
-      button.textContent = buttonText;
-      button.className = getButtonClass(buttonText);
-      button.addEventListener('click', () => handleButtonClick(buttonText));
-      rowDiv.appendChild(button);
-    });
-
-    buttonsContainer.appendChild(rowDiv);
-  });
+function isOperator(value) {
+  return ['+', '-', '×', '÷', '%'].includes(value);
 }
 
 function getButtonClass(text) {
@@ -87,6 +106,80 @@ function getButtonClass(text) {
   return 'number';
 }
 
+// Input handling functions
+function inputNumber(num) {
+  if (waitingForNewNumber) {
+    display.value = num;
+    waitingForNewNumber = false;
+  } else {
+    display.value = display.value === '0' ? num : display.value + num;
+  }
+}
+
+function inputOperator(op) {
+  if (firstNumber === '') {
+    firstNumber = display.value;
+  } else if (operator && !waitingForNewNumber) {
+    secondNumber = display.value;
+    const result = operate(
+      operator,
+      parseFloat(firstNumber),
+      parseFloat(secondNumber)
+    );
+    display.value = result;
+    firstNumber = result.toString();
+  }
+
+  operator = op;
+  waitingForNewNumber = true;
+}
+
+function inputDecimal() {
+  if (waitingForNewNumber) {
+    display.value = '0.';
+    waitingForNewNumber = false;
+  } else if (!display.value.includes('.')) {
+    display.value += '.';
+  }
+}
+
+// Control Functions
+function calculate() {
+  if (firstNumber === '' || operator === '' || waitingForNewNumber) {
+    return;
+  }
+
+  secondNumber = display.value;
+  const result = operate(
+    operator,
+    parseFloat(firstNumber),
+    parseFloat(secondNumber)
+  );
+  display.value = result;
+
+  firstNumber = result.toString();
+  operator = '';
+  secondNumber = '';
+  waitingForNewNumber = true;
+}
+
+function clearAll() {
+  display.value = '0';
+  firstNumber = '';
+  operator = '';
+  secondNumber = '';
+  waitingForNewNumber = false;
+}
+
+function deleteLast() {
+  if (display.value.length > 1) {
+    display.value = display.value.slice(0, -1);
+  } else {
+    display.value = '0';
+  }
+}
+
+// Event handlers
 function handleButtonClick(value) {
   if (isNumber(value)) {
     inputNumber(value);
@@ -118,126 +211,23 @@ function handleButtonClick(value) {
   }
 }
 
-function isNumber(value) {
-  return !isNaN(value) && value !== '.';
+// UI Setup
+function createButtons() {
+  buttonConfig.forEach((row) => {
+    const rowDiv = document.createElement('div');
+    rowDiv.className = 'button-row';
+
+    row.forEach((buttonText) => {
+      const button = document.createElement('button');
+      button.textContent = buttonText;
+      button.className = getButtonClass(buttonText);
+      button.addEventListener('click', () => handleButtonClick(buttonText));
+      rowDiv.appendChild(button);
+    });
+
+    buttonsContainer.appendChild(rowDiv);
+  });
 }
-
-function isOperator(value) {
-  return ['+', '-', '×', '÷', '%'].includes(value);
-}
-
-function inputNumber(num) {
-  if (waitingForNewNumber) {
-    display.value = num;
-    waitingForNewNumber = false;
-  } else {
-    display.value = display.value === '0' ? num : display.value + num;
-  }
-}
-
-function inputOperator(op) {
-  if (firstNumber === '') {
-    firstNumber = display.value;
-  } else if (operator && !waitingForNewNumber) {
-    secondNumber = display.value;
-    const result = operate(
-      operator,
-      parseFloat(firstNumber),
-      parseFloat(secondNumber)
-    );
-    display.value = result;
-    firstNumber = result.toString();
-  }
-
-  operator = op;
-  waitingForNewNumber = true;
-}
-
-function calculate() {
-  if (firstNumber === '' || operator === '' || waitingForNewNumber) {
-    return;
-  }
-
-  secondNumber = display.value;
-  const result = operate(
-    operator,
-    parseFloat(firstNumber),
-    parseFloat(secondNumber)
-  );
-  display.value = result;
-
-  firstNumber = result.toString();
-  operator = '';
-  secondNumber = '';
-  waitingForNewNumber = true;
-}
-
-function clearAll() {
-  display.value = '0';
-  firstNumber = '';
-  operator = '';
-  secondNumber = '';
-  waitingForNewNumber = false;
-}
-
-function inputDecimal() {
-  if (waitingForNewNumber) {
-    display.value = '0.';
-    waitingForNewNumber = false;
-  } else if (!display.value.includes('.')) {
-    display.value += '.';
-  }
-}
-
-function deleteLast() {
-  if (display.value.length > 1) {
-    display.value = display.value.slice(0, -1);
-  } else {
-    display.value = '0';
-  }
-}
-
-document.addEventListener('keydown', function (event) {
-  const key = event.key;
-
-  if (
-    ['+', '-', '*', '/', '=', 'Enter', 'Escape', 'Backspace', '.'].includes(key)
-  ) {
-    event.preventDefault();
-  }
-
-  const keyMappings = {
-    0: '0',
-    1: '1',
-    2: '2',
-    3: '3',
-    4: '4',
-    5: '5',
-    6: '6',
-    7: '7',
-    8: '8',
-    9: '9',
-    '+': '+',
-    '-': '-',
-    '*': '×',
-    '/': '÷',
-    Enter: '=',
-    '=': '=',
-    Escape: 'AC',
-    c: 'AC',
-    C: 'AC',
-    Backspace: '⌫',
-    '.': '.',
-    '%': '%',
-  };
-
-  const mappedValue = keyMappings[key];
-
-  if (mappedValue) {
-    handleButtonClick(mappedValue);
-    highlightButton(mappedValue);
-  }
-});
 
 function highlightButton(value) {
   const buttons = document.querySelectorAll('button');
@@ -250,5 +240,23 @@ function highlightButton(value) {
     }
   });
 }
+
+// Event listeners
+document.addEventListener('keydown', function (event) {
+  const key = event.key;
+
+  if (
+    ['+', '-', '*', '/', '=', 'Enter', 'Escape', 'Backspace', '.'].includes(key)
+  ) {
+    event.preventDefault();
+  }
+
+  const mappedValue = keyMappings[key];
+
+  if (mappedValue) {
+    handleButtonClick(mappedValue);
+    highlightButton(mappedValue);
+  }
+});
 
 createButtons();
