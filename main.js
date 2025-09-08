@@ -197,4 +197,58 @@ function deleteLast() {
   }
 }
 
+document.addEventListener('keydown', function (event) {
+  const key = event.key;
+
+  if (
+    ['+', '-', '*', '/', '=', 'Enter', 'Escape', 'Backspace', '.'].includes(key)
+  ) {
+    event.preventDefault();
+  }
+
+  const keyMappings = {
+    0: '0',
+    1: '1',
+    2: '2',
+    3: '3',
+    4: '4',
+    5: '5',
+    6: '6',
+    7: '7',
+    8: '8',
+    9: '9',
+    '+': '+',
+    '-': '-',
+    '*': '×',
+    '/': '÷',
+    Enter: '=',
+    '=': '=',
+    Escape: 'AC',
+    c: 'AC',
+    C: 'AC',
+    Backspace: '⌫',
+    '.': '.',
+    '%': '%',
+  };
+
+  const mappedValue = keyMappings[key];
+
+  if (mappedValue) {
+    handleButtonClick(mappedValue);
+    highlightButton(mappedValue);
+  }
+});
+
+function highlightButton(value) {
+  const buttons = document.querySelectorAll('button');
+  buttons.forEach((button) => {
+    if (button.textContent === value) {
+      button.style.opacity = '0.6';
+      setTimeout(() => {
+        button.style.opacity = '';
+      }, 150);
+    }
+  });
+}
+
 createButtons();
