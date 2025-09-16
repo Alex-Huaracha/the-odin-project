@@ -49,6 +49,58 @@ body {
   background: #2a2343;
 }
 
+.board,
+.turn {
+  display: none;
+}
+
+#playerForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  background: #17122a;
+  padding: 32px 24px 24px 24px;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px 0 #00000033;
+  margin-bottom: 32px;
+}
+
+#playerForm input[type='text'] {
+  background: #0a0519;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 18px;
+  font-size: 18px;
+  color: #fff;
+  width: 220px;
+  margin-bottom: 6px;
+  outline: none;
+  transition: background 0.2s;
+}
+
+#playerForm input[type='text']:focus {
+  background: #2a2343;
+}
+
+#playerForm button[type='submit'] {
+  background: #2a2343;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 0;
+  width: 160px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-top: 10px;
+}
+
+#playerForm button[type='submit']:hover {
+  background: #3d3166;
+}
+
 #restartBtn {
   flex: 1;
   margin-top: 30px;

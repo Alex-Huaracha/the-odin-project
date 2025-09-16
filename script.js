@@ -1,6 +1,5 @@
 function Gameboard() {
   let board = new Array(9).fill('');
-  console.log(board);
 
   function getBoard() {
     return board;
@@ -50,9 +49,9 @@ function Player(name, marker) {
   return { name, marker };
 }
 
-function GameController() {
+function GameController(name1 = 'Player 1', name2 = 'Player 2') {
   const gameboard = Gameboard();
-  const players = [Player('Player 1', 'X'), Player('Player 2', 'O')];
+  const players = [Player(name1, 'X'), Player(name2, 'O')];
   let currentPlayerIndex = 0;
   let gameOver = false;
   let winner = null;
@@ -220,30 +219,50 @@ function GameController() {
 }
 
 function ScreenController() {
-  const gameController = GameController();
+  let gameController;
   const boardElement = document.querySelector('.board');
   const restartBtn = document.querySelector('#restartBtn');
+  const turnElement = document.querySelector('.turn');
+  const playerForm = document.getElementById('playerForm');
 
-  boardElement.innerHTML = '';
+  playerForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const player1 = document.getElementById('player1').value || 'Player 1';
+    const player2 = document.getElementById('player2').value || 'Player 2';
+    startGame(player1, player2);
+    playerForm.style.display = 'none';
+    boardElement.style.display = 'grid';
+    restartBtn.style.display = 'block';
+    turnElement.style.display = 'block';
+  });
 
-  for (let i = 0; i < 9; i++) {
-    const cell = document.createElement('div');
-    cell.classList.add('cell');
-    cell.dataset.index = i;
-    boardElement.appendChild(cell);
+  function startGame(name1, name2) {
+    gameController = GameController(name1, name2);
+    setupBoard();
+    updateBoard();
+    updateTurn();
   }
 
-  const cells = document.querySelectorAll('.cell');
-  cells.forEach((cell) => {
-    cell.addEventListener('click', (e) => {
-      const index = parseInt(e.target.dataset.index);
-      const row = Math.floor(index / 3);
-      const col = index % 3;
-      const result = gameController.makeMove(row, col);
-      updateBoard();
-      updateTurn(result);
+  function setupBoard() {
+    boardElement.innerHTML = '';
+    for (let i = 0; i < 9; i++) {
+      const cell = document.createElement('div');
+      cell.classList.add('cell');
+      cell.dataset.index = i;
+      boardElement.appendChild(cell);
+    }
+    const cells = document.querySelectorAll('.cell');
+    cells.forEach((cell) => {
+      cell.addEventListener('click', (e) => {
+        const index = parseInt(e.target.dataset.index);
+        const row = Math.floor(index / 3);
+        const col = index % 3;
+        const result = gameController.makeMove(row, col);
+        updateBoard();
+        updateTurn(result);
+      });
     });
-  });
+  }
 
   function updateBoard() {
     const board = gameController.getGameState().board;
@@ -253,12 +272,11 @@ function ScreenController() {
   }
 
   function updateTurn(result) {
-    const turnElement = document.querySelector('.turn');
     if (result && result.gameState.gameOver) {
       turnElement.textContent = result.message;
       restartBtn.style.visibility = 'visible';
     } else {
-      turnElement.textContent = `Turno de: ${
+      turnElement.textContent = `Turn: ${
         gameController.getGameState().currentPlayer
       }`;
       restartBtn.style.visibility = 'hidden';
