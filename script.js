@@ -219,24 +219,58 @@ function GameController() {
   };
 }
 
-const gameController = GameController();
+function ScreenController() {
+  const gameController = GameController();
+  const boardElement = document.querySelector('.board');
+  const restartBtn = document.querySelector('#restartBtn');
 
-console.log('=== Basic Game ===');
-console.log(gameController.makeMove(0, 0)); // Player 1 moves
-console.log(gameController.makeMove(0, 1)); // Player 2 moves
-console.log(gameController.makeMove(1, 1)); // Player 1 moves
-console.log(gameController.makeMove(0, 2)); // Player 2 moves
-console.log(gameController.makeMove(2, 2)); // Player 1 moves and wins
+  boardElement.innerHTML = '';
 
-console.log('\n=== Game status ===');
-console.log(gameController.getGameState());
+  for (let i = 0; i < 9; i++) {
+    const cell = document.createElement('div');
+    cell.classList.add('cell');
+    cell.dataset.index = i;
+    boardElement.appendChild(cell);
+  }
 
-console.log('\n=== Reset Game ===');
-gameController.resetGame();
-console.log('Game over:', gameController.isGameOver());
+  const cells = document.querySelectorAll('.cell');
+  cells.forEach((cell) => {
+    cell.addEventListener('click', (e) => {
+      const index = parseInt(e.target.dataset.index);
+      const row = Math.floor(index / 3);
+      const col = index % 3;
+      const result = gameController.makeMove(row, col);
+      updateBoard();
+      updateTurn(result);
+    });
+  });
 
-console.log('\n=== Game vs IA ===');
-gameController.makeMove(0, 0); // Player 1
-console.log(gameController.makeAIMove()); // AI move
-gameController.makeMove(1, 1); // Player 1
-console.log(gameController.makeAIMove()); // AI move
+  function updateBoard() {
+    const board = gameController.getGameState().board;
+    document.querySelectorAll('.cell').forEach((cell, i) => {
+      cell.textContent = board[i];
+    });
+  }
+
+  function updateTurn(result) {
+    const turnElement = document.querySelector('.turn');
+    if (result && result.gameState.gameOver) {
+      turnElement.textContent = result.message;
+      restartBtn.style.visibility = 'visible';
+    } else {
+      turnElement.textContent = `Turno de: ${
+        gameController.getGameState().currentPlayer
+      }`;
+      restartBtn.style.visibility = 'hidden';
+    }
+  }
+
+  restartBtn.addEventListener('click', () => {
+    gameController.resetGame();
+    updateBoard();
+    updateTurn();
+    restartBtn.style.visibility = 'hidden';
+  });
+}
+
+ScreenController();
