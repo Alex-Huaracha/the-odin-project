@@ -2,104 +2,105 @@ import { Node } from './Node.js';
 
 export class LinkedList {
   constructor() {
-    this.head = null;
+    this.headNode = null;
   }
+
   append(value) {
     const newNode = new Node(value);
-    if (!this.head) {
-      this.head = newNode;
+    if (!this.headNode) {
+      this.headNode = newNode;
       return;
     }
-    let current = this.head;
-    while (current.next) {
-      current = current.next;
+    let current = this.headNode;
+    while (current.nextNode) {
+      current = current.nextNode;
     }
-    current.next = newNode;
+    current.nextNode = newNode;
   }
 
   prepend(value) {
     const newNode = new Node(value);
-    newNode.next = this.head;
-    this.head = newNode;
+    newNode.nextNode = this.headNode;
+    this.headNode = newNode;
   }
 
   size() {
     let count = 0;
-    let current = this.head;
+    let current = this.headNode;
     while (current) {
       count++;
-      current = current.next;
+      current = current.nextNode;
     }
     return count;
   }
 
   head() {
-    return this.head ? this.head.value : null;
+    return this.headNode;
   }
 
   tail() {
-    if (!this.head) return null;
-    let current = this.head;
-    while (current.next) {
-      current = current.next;
+    if (!this.headNode) return null;
+    let current = this.headNode;
+    while (current.nextNode) {
+      current = current.nextNode;
     }
-    return current.value;
+    return current;
   }
 
   at(index) {
     if (index < 0) return null;
-    let current = this.head;
+    let current = this.headNode;
     let count = 0;
     while (current) {
-      if (count === index) return current.value;
+      if (count === index) return current;
       count++;
-      current = current.next;
+      current = current.nextNode;
     }
     return null;
   }
 
   pop() {
-    if (!this.head) return null;
-    if (!this.head.next) {
-      const value = this.head.value;
-      this.head = null;
-      return value;
+    if (!this.headNode) return null;
+    if (!this.headNode.nextNode) {
+      const removed = this.headNode;
+      this.headNode = null;
+      return removed;
     }
-    let current = this.head;
-    while (current.next && current.next.next) {
-      current = current.next;
+    let current = this.headNode;
+    while (current.nextNode && current.nextNode.nextNode) {
+      current = current.nextNode;
     }
-    const value = current.next.value;
-    current.next = null;
-    return value;
+    const removed = current.nextNode;
+    current.nextNode = null;
+    return removed;
   }
 
   contains(value) {
-    let current = this.head;
+    let current = this.headNode;
     while (current) {
       if (current.value === value) return true;
-      current = current.next;
+      current = current.nextNode;
     }
     return false;
   }
 
   find(value) {
-    let current = this.head;
+    let current = this.headNode;
     let index = 0;
     while (current) {
       if (current.value === value) return index;
-      current = current.next;
+      current = current.nextNode;
       index++;
     }
     return null;
   }
 
   toString() {
-    let current = this.head;
+    let current = this.headNode;
     let str = '';
     while (current) {
       str += `( ${current.value} ) -> `;
-      current = current.next;
+      current = current.nextNode;
     }
     str += 'null';
     return str;
@@ -109,34 +110,34 @@ export class LinkedList {
     if (index < 0) return;
     const newNode = new Node(value);
     if (index === 0) {
-      newNode.next = this.head;
-      this.head = newNode;
+      newNode.nextNode = this.headNode;
+      this.headNode = newNode;
       return;
     }
-    let current = this.head;
+    let current = this.headNode;
     let count = 0;
     while (current && count < index - 1) {
-      current = current.next;
+      current = current.nextNode;
       count++;
     }
     if (!current) return;
-    newNode.next = current.next;
-    current.next = newNode;
+    newNode.nextNode = current.nextNode;
+    current.nextNode = newNode;
   }
 
   removeAt(index) {
-    if (index < 0 || !this.head) return;
+    if (index < 0 || !this.headNode) return;
     if (index === 0) {
-      this.head = this.head.next;
+      this.headNode = this.headNode.nextNode;
       return;
     }
-    let current = this.head;
+    let current = this.headNode;
     let count = 0;
-    while (current.next && count < index - 1) {
-      current = current.next;
+    while (current.nextNode && count < index - 1) {
+      current = current.nextNode;
       count++;
     }
-    if (!current.next) return;
-    current.next = current.next.next;
+    if (!current.nextNode) return;
+    current.nextNode = current.nextNode.nextNode;
   }
 }
