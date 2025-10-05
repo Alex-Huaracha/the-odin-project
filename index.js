@@ -1,4 +1,5 @@
 import { HashMap } from './HashMap.js';
+import { HashSet } from './HashSet.js';
 
 const test = new HashMap(); // capacity 16, loadFactor 0.75
 
@@ -69,3 +70,12 @@ console.log('length vs keys length:', test.length(), test.keys().length);
 // clear
 test.clear();
 console.log('Tras clear -> length:', test.length(), 'keys:', test.keys());
+
+const hs = new HashSet();
+hs.add('apple');
+hs.add('banana');
+hs.add('apple'); // duplicado, no aumenta
+console.log('HashSet length:', hs.length()); // 2
+console.log('Has apple?', hs.has('apple')); // true
+hs.remove('apple');
+console.log('Has apple after remove?', hs.has('apple')); // false
