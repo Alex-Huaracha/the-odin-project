@@ -8,15 +8,19 @@ class BST {
   buildTree(array) {
     if (!Array.isArray(array) || array.length === 0) return null;
     const uniqueSortedArray = [...new Set(array)].sort((a, b) => a - b);
-    return this.buildBalancedTree(uniqueSortedArray);
+    return this.buildBalancedTree(
+      uniqueSortedArray,
+      0,
+      uniqueSortedArray.length - 1
+    );
   }
 
-  buildBalancedTree(array) {
-    if (array.length === 0) return null;
-    const mid = Math.floor(array.length / 2);
+  buildBalancedTree(array, start = 0, end = array.length - 1) {
+    if (start > end) return null;
+    const mid = Math.floor((start + end) / 2);
     const node = new Node(array[mid]);
-    node.left = this.buildBalancedTree(array.slice(0, mid));
-    node.right = this.buildBalancedTree(array.slice(mid + 1));
+    node.left = this.buildBalancedTree(array, start, mid - 1);
+    node.right = this.buildBalancedTree(array, mid + 1, end);
     return node;
   }
 
