@@ -1,14 +1,17 @@
 {
   "name": "battleship",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "A simple implementation of the Battleship game using JavaScript.",
+  "main": "src/index.js",
+  "type": "module",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "start": "node src/index.js"
   },
   "keywords": [
     "battleship",
-    "game"
+    "game",
+    "javascript"
   ],
   "author": "Alex Huaracha",
   "license": "ISC",
