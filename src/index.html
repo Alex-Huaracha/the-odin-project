@@ -5,5 +5,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Battleship Game</title>
   </head>
-  <body></body>
+  <body>
+    <div class="game-container">
+      <header class="game-header">
+        <h1 class="game-title">Battleship</h1>
+        <div class="game-status">Click "Start Game" to begin</div>
+      </header>
+
+      <section class="game-boards">
+        <div class="board-container">
+          <h2 class="board-title">Your Fleet</h2>
+          <div class="game-board" data-player="human"></div>
+        </div>
+
+        <div class="board-container">
+          <h2 class="board-title">Enemy Waters</h2>
+          <div class="game-board" data-player="computer"></div>
+        </div>
+      </section>
+
+      <div class="game-controls">
+        <button class="btn btn--primary" data-action="start">Start Game</button>
+        <button class="btn btn--secondary" data-action="random" disabled>
+          Random Placement
+        </button>
+        <button class="btn btn--danger" data-action="reset" disabled>
+          Reset Game
+        </button>
+      </div>
+
+      <div id="ship-placement-info" style="display: none">
+        <h3>Place Your Ships</h3>
+        <p>Current ship: <span id="current-ship-info"></span></p>
+        <div>
+          <label>
+            <input type="radio" name="orientation" value="horizontal" checked />
+            Horizontal
+          </label>
+          <label>
+            <input type="radio" name="orientation" value="vertical" /> Vertical
+          </label>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>
