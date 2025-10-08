@@ -323,3 +323,82 @@ body {
   background: rgba(76, 175, 80, 0.3);
   border: 2px solid #4caf50;
 }
+
+/* Footer styles */
+.game-footer {
+  margin-top: 50px;
+  padding: 30px 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(15px);
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.footer-content p {
+  margin: 8px 0;
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.footer-subtitle {
+  font-size: 0.9rem !important;
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+.footer-content a {
+  color: #ffd7c1;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: bold;
+}
+
+.footer-content a:hover {
+  color: #f85b1a;
+  transform: translateY(-2px);
+  text-shadow: 0 4px 8px rgba(76, 175, 80, 0.3);
+}
+
+.github-icon {
+  width: 20px;
+  height: 20px;
+  transition: all 0.3s ease;
+  fill: currentColor;
+  font-size: 1.2rem;
+  animation: sparkle 2s ease-in-out infinite;
+}
+
+@keyframes sparkle {
+  0%,
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.1) rotate(5deg);
+    opacity: 1;
+  }
+}
+
+/* Responsive footer */
+@media (max-width: 768px) {
+  .game-footer {
+    margin-top: 30px;
+    padding: 20px 15px;
+  }
+
+  .footer-content p {
+    font-size: 0.9rem;
+  }
+
+  .footer-subtitle {
+    font-size: 0.8rem !important;
+  }
+}
