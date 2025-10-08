@@ -11,15 +11,15 @@ class Game {
 
   startGame() {
     this.setupRandomFleet(this.player2);
-    this.gameOver = false;
-    this.winner = null;
   }
 
   startGameplay() {
     if (!this.player1.isFleetPlaced) {
       throw new Error('Human player must place fleet first');
     }
-    this.startGame();
+    this.gameOver = false;
+    this.winner = null;
+    this.currentPlayer = this.player1;
   }
 
   placePlayerShip(shipIndex, startCoordinate, orientation) {
