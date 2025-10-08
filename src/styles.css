@@ -9,16 +9,19 @@ body {
   background: #0f0f0f;
   color: white;
   min-height: 100vh;
-  padding: 20px;
+  display: flex;
+  flex-direction: column;
 }
 
 .game-container {
   max-width: 1200px;
   margin: 0 auto;
   text-align: center;
+  flex: 1;
 }
 
 .game-header .game-title {
+  padding-top: 50px;
   font-size: 3rem;
   margin-bottom: 10px;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
@@ -331,6 +334,7 @@ body {
   background: rgba(255, 255, 255, 0.05);
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(15px);
+  flex-shrink: 0;
 }
 
 .footer-content {
