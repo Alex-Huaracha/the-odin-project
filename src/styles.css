@@ -295,8 +295,8 @@ body {
 }
 
 [data-player='computer'] .board-cell:hover {
-  background: rgba(255, 235, 59, 0.8) !important;
-  border: 2px solid #ffc107;
+  background: rgba(255, 152, 0, 0.8) !important;
+  border: 2px solid #ff9800;
 }
 
 [data-player='human'] .board-cell:hover:not(.ship):not(.hit):not(.miss) {
