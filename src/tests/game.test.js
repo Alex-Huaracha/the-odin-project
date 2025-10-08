@@ -1,5 +1,5 @@
-import Game from '../src/game.js';
-import Player from '../src/player.js';
+import Game from '../modules/game.js';
+import Player from '../modules/player.js';
 
 describe('Game', () => {
   let game;

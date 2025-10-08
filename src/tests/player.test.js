@@ -1,6 +1,6 @@
-import Player from '../src/player.js';
-import Gameboard from '../src/gameboard.js';
-import { createDefaultFleet } from '../src/shipConfig.js';
+import Player from '../modules/player.js';
+import Gameboard from '../modules/gameboard.js';
+import { createDefaultFleet } from '../modules/shipConfig.js';
 
 describe('Player', () => {
   let player;
