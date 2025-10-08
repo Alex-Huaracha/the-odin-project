@@ -67,7 +67,7 @@ class BattleshipApp {
     const nextShip = this.game.getNextShipToPlace();
     if (nextShip) {
       this.domManager.updateShipPlacementInfo(nextShip);
-      this.setupShipHoverEffect(nextShip.length); // ✅ CORREGIDO
+      this.setupShipHoverEffect(nextShip.length);
     }
   }
 
@@ -123,6 +123,16 @@ class BattleshipApp {
   finishShipPlacement() {
     this.isPlacingShips = false;
     this.gameState = 'playing';
+
+    const playerBoard = document.querySelector('[data-player="human"]');
+    if (this.mouseoverHandler && this.mouseleaveHandler) {
+      playerBoard.removeEventListener('mouseover', this.mouseoverHandler);
+      playerBoard.removeEventListener('mouseleave', this.mouseleaveHandler);
+      this.mouseoverHandler = null;
+      this.mouseleaveHandler = null;
+    }
+
+    this.domManager.clearHighlights();
 
     this.game.startGameplay();
     this.domManager.updateGameStatus(
