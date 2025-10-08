@@ -39,8 +39,15 @@ export class DOMManager {
         const coordinateKey = `${x},${y}`;
         if (gameboard.attackedCoordinates.has(coordinateKey)) {
           if (gameboard.board[y][x]) {
-            cell.classList.add('hit');
-            cell.textContent = 'x';
+            const ship = gameboard.board[y][x];
+
+            if (ship.isSunk()) {
+              cell.classList.add('sunk');
+              cell.textContent = '💀';
+            } else {
+              cell.classList.add('hit');
+              cell.textContent = 'x';
+            }
           } else {
             cell.classList.add('miss');
             cell.textContent = '●';

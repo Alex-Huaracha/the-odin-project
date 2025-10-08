@@ -269,6 +269,26 @@ body {
   animation: missEffect 0.4s ease-out;
 }
 
+.board-cell.sunk {
+  background: #9c27b0 !important;
+  color: white;
+  animation: sunkEffect 0.8s ease-out;
+}
+
+@keyframes sunkEffect {
+  0% {
+    transform: scale(1);
+    background: #f44336;
+  }
+  50% {
+    transform: scale(1.3);
+    background: #9c27b0;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
 @keyframes hitEffect {
   0% {
     transform: scale(1);
