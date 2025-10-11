@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
+/* Base */
 :root {
   /* Dark Theme */
   --background-color: #070708;
@@ -11,11 +12,10 @@
 
 body {
   font-family: 'Roboto', sans-serif;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  margin: 0;
+  padding: 0;
   background-color: var(--background-color);
-  color: var(--background-color-light);
+  color: var(--text-color);
 }
 
 h1,
@@ -31,9 +31,11 @@ a {
   text-decoration: none;
   color: inherit;
 }
+
 a:hover {
   text-decoration: underline;
 }
+
 ul {
   list-style: none;
   padding: 0;
@@ -41,10 +43,13 @@ ul {
 }
 
 .container {
-  max-width: 80vw;
-  padding: 20px;
+  width: 100%;
+  max-width: 75rem;
+  padding: 1rem;
+  margin: 0 auto;
 }
 
+/* Header */
 .site-header {
   display: flex;
   justify-content: space-between;
