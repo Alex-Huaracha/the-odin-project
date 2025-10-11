@@ -49,17 +49,17 @@ ul {
   margin: 0 auto;
 }
 
-/* Header */
+/* Header - Mobile First */
 .site-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 20px;
+  gap: 1rem;
 }
 
 .main-nav {
-  border-radius: 12px;
-  padding: 7px 50px;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
   background: rgba(255, 255, 255, 0.1);
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(5px);
@@ -69,7 +69,7 @@ ul {
 
 .nav-links {
   display: flex;
-  gap: 40px;
+  gap: 1.2rem;
   align-items: center;
 }
 
@@ -108,7 +108,7 @@ ul {
 .header-buttons {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 0.75rem;
 }
 
 .icon-button {
@@ -116,4 +116,90 @@ ul {
   border: none;
   cursor: pointer;
   padding: 0;
+}
+
+/* Tablet Media Query (768px - 1024px) */
+@media (min-width: 768px) {
+  .site-header {
+    gap: 1rem;
+    padding: 0.75rem 0;
+  }
+
+  .main-nav {
+    border-radius: 8px;
+    padding: 0.5rem 1.5rem;
+  }
+
+  .nav-links {
+    gap: 1.8rem;
+  }
+
+  .nav-links li:hover {
+    scale: 1.08;
+  }
+
+  .icon {
+    width: 22px;
+    height: 22px;
+  }
+
+  .left {
+    width: 22px;
+    height: 22px;
+    margin-right: -3px;
+  }
+
+  .right {
+    width: 26px;
+    height: 26px;
+  }
+
+  .header-buttons {
+    gap: 0.75rem;
+  }
+}
+
+/* Desktop Media Query (1024px+) */
+@media (min-width: 1024px) {
+  .site-header {
+    gap: 1.25rem;
+    padding: 1rem 0;
+  }
+
+  .main-nav {
+    border-radius: 12px;
+    padding: 0.45rem 3rem;
+  }
+
+  .nav-links {
+    gap: 2.5rem;
+  }
+
+  .nav-links li:hover {
+    scale: 1.1;
+  }
+
+  .icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  .icon:hover {
+    scale: 1.2;
+  }
+
+  .left {
+    width: 24px;
+    height: 24px;
+    margin-right: -4px;
+  }
+
+  .right {
+    width: 29px;
+    height: 29px;
+  }
+
+  .header-buttons {
+    gap: 1.25rem;
+  }
 }
