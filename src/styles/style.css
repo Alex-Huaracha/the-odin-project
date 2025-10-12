@@ -118,8 +118,84 @@ ul {
   padding: 0;
 }
 
+/* Hero */
+.hero-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  min-height: 50vh;
+  gap: 1.5rem;
+  padding: 2rem 0;
+}
+
+.hero-photo img {
+  width: 200px;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 2px solid #545454;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.hero-text {
+  max-width: 100%;
+}
+
+.hero-intro {
+  color: #7f8cff;
+  font-size: 1rem;
+  margin-bottom: 0.25rem;
+}
+
+.hero-name {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 0;
+  color: #fff;
+}
+
+.hero-role {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #bdbdbd;
+  margin: 0 0 1rem 0;
+}
+
+.hero-desc {
+  color: #e0e0e0;
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+}
+
+.hero-desc {
+  color: #e0e0e0;
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+.hero-btn {
+  background: none;
+  border: 2px solid #7f8cff;
+  color: #7f8cff;
+  padding: 0.6rem 1.5rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.hero-btn:hover {
+  background: #7f8cff;
+  color: #fff;
+}
+
 /* Tablet Media Query (768px - 1024px) */
 @media (min-width: 768px) {
+  /* Header */
   .site-header {
     gap: 1rem;
     padding: 0.75rem 0;
@@ -157,10 +233,56 @@ ul {
   .header-buttons {
     gap: 0.75rem;
   }
+
+  /* Hero */
+  .hero-content {
+    flex-direction: row;
+    text-align: left;
+    min-height: 55vh;
+    gap: 2.5rem;
+    padding: 3rem 0;
+  }
+
+  .hero-photo img {
+    width: 230px;
+    height: 300px;
+    border-radius: 10px;
+    border: 3px solid #545454;
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.25);
+  }
+
+  .hero-text {
+    max-width: 350px;
+  }
+
+  .hero-intro {
+    font-size: 1.1rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .hero-name {
+    font-size: 2.2rem;
+  }
+
+  .hero-role {
+    font-size: 1.7rem;
+  }
+
+  .hero-desc {
+    font-size: 1rem;
+    margin-bottom: 1.8rem;
+  }
+
+  .hero-btn {
+    padding: 0.7rem 1.8rem;
+    font-size: 1rem;
+    border-radius: 7px;
+  }
 }
 
 /* Desktop Media Query (1024px+) */
 @media (min-width: 1024px) {
+  /* Header */
   .site-header {
     gap: 1.25rem;
     padding: 1rem 0;
@@ -201,5 +323,49 @@ ul {
 
   .header-buttons {
     gap: 1.25rem;
+  }
+
+  /* Hero */
+  .hero-content {
+    justify-content: center;
+    min-height: 60vh;
+    gap: 2.5rem;
+    padding: 4rem 0;
+  }
+
+  .hero-photo img {
+    width: 260px;
+    height: 340px;
+    border-radius: 12px;
+    border: 3px solid #545454;
+    box-shadow: 0 4px 32px rgba(0, 0, 0, 0.25);
+  }
+
+  .hero-text {
+    max-width: 400px;
+  }
+
+  .hero-intro {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .hero-name {
+    font-size: 2.5rem;
+  }
+
+  .hero-role {
+    font-size: 2rem;
+  }
+
+  .hero-desc {
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+  }
+
+  .hero-btn {
+    padding: 0.75rem 2rem;
+    font-size: 1.1rem;
+    border-radius: 8px;
   }
 }
