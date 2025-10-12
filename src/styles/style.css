@@ -193,6 +193,63 @@ ul {
   color: #fff;
 }
 
+/* About Section */
+.about {
+  padding: 2rem 0;
+  background: var(--background-color);
+  text-align: center;
+}
+
+.about-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: center;
+  text-align: center;
+}
+
+.about h2 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--text-color);
+  margin-bottom: 1rem;
+}
+
+.about-photo {
+  order: 1;
+}
+
+.about-photo img {
+  width: 280px;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.about-content {
+  order: 2;
+  max-width: 100%;
+}
+
+.about-content p {
+  color: #e0e0e0;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.about-content p:last-child {
+  margin-bottom: 0;
+}
+
+.about-content strong {
+  color: #7f8cff;
+  font-weight: 600;
+}
+
 /* Tablet Media Query (768px - 1024px) */
 @media (min-width: 768px) {
   /* Header */
@@ -277,6 +334,48 @@ ul {
     padding: 0.7rem 1.8rem;
     font-size: 1rem;
     border-radius: 7px;
+  }
+
+  /* About */
+  .about {
+    padding: 3rem 0;
+  }
+
+  .about-container {
+    flex-direction: row;
+    gap: 2.5rem;
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .about h2 {
+    font-size: 2.2rem;
+    margin-bottom: 1.5rem;
+    width: 100%;
+    text-align: center;
+  }
+
+  .about-photo {
+    order: 2;
+    flex-shrink: 0;
+  }
+
+  .about-photo img {
+    width: 320px;
+    height: 200px;
+    border-radius: 10px;
+    border: 3px solid rgba(255, 255, 255, 0.25);
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.25);
+  }
+
+  .about-content {
+    order: 1;
+    max-width: 400px;
+  }
+
+  .about-content p {
+    font-size: 1rem;
+    margin-bottom: 1.2rem;
   }
 }
 
@@ -367,5 +466,38 @@ ul {
     padding: 0.75rem 2rem;
     font-size: 1.1rem;
     border-radius: 8px;
+  }
+
+  /* About Desktop */
+  .about {
+    padding: 4rem 0;
+    flex: row;
+  }
+
+  .about-container {
+    gap: 3rem;
+    justify-content: center;
+  }
+
+  .about h2 {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .about-photo img {
+    width: auto;
+    height: 340px;
+    border-radius: 12px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 32px rgba(0, 0, 0, 0.3);
+  }
+
+  .about-content {
+    max-width: 500px;
+  }
+
+  .about-content p {
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
   }
 }
