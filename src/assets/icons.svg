@@ -9,16 +9,16 @@
   </symbol>
 
   <!-- Dark Theme Icon -->
-  <svg id="icon-moon" viewBox="0 0 24 24">
+  <symbol id="icon-moon" viewBox="0 0 24 24">
     <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M18 5h4"/>
       <path d="M20 3v4"/>
       <path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/>
     </g>
-  </svg>
+  </symbol>
 
   <!-- Light Theme Icon -->
-  <svg id="icon-sun" viewBox="0 0 24 24">
+  <symbol id="icon-sun" viewBox="0 0 24 24">
     <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <circle cx="12" cy="12" r="4"/>
       <path d="M12 2v2"/>
@@ -30,10 +30,10 @@
       <path d="m6.34 17.66-1.41 1.41"/>
       <path d="m19.07 4.93-1.41 1.41"/>
     </g>
-  </svg>
+  </symbol>
 
   <!-- Logo -->
-  <svg id="icon-logo1" viewBox="0 0 24 24">
+  <symbol id="icon-logo1" viewBox="0 0 24 24">
     <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M17.596 12.768a2 2 0 1 0 2.829-2.829l-1.768-1.767a2 2 0 0 0 2.828-2.829l-2.828-2.828a2 2 0 0 0-2.829 2.828l-1.767-1.768a2 2 0 1 0-2.829 2.829z"/>
       <path d="m2.5 21.5 1.4-1.4"/>
@@ -41,43 +41,66 @@
       <path d="M5.343 21.485a2 2 0 1 0 2.829-2.828l1.767 1.768a2 2 0 1 0 2.829-2.829l-6.364-6.364a2 2 0 1 0-2.829 2.829l1.768 1.767a2 2 0 0 0-2.828 2.829z"/>
       <path d="m9.6 14.4 4.8-4.8"/>
     </g>
-  </svg>
-  <svg id="icon-logo2" viewBox="0 0 24 24">
+  </symbol>
+  <symbol id="icon-logo2" viewBox="0 0 24 24">
     <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="m9 18 6-6-6-6"/>
     </g>
-  </svg>
+  </symbol>
 
   <!-- Home Icon -->
-  <svg id="icon-home" viewBox="0 0 24 24">
+  <symbol id="icon-home" viewBox="0 0 24 24">
     <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/>
       <path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
     </g>
-  </svg>
+  </symbol>
 
   <!-- About Icon -->
-  <svg id="icon-about" viewBox="0 0 24 24">
+  <symbol id="icon-about" viewBox="0 0 24 24">
     <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/>
       <circle cx="12" cy="7" r="4"/>
     </g>
-  </svg>
+  </symbol>
 
   <!-- Projects Icon -->
-  <svg id="icon-project" viewBox="0 0 24 24">
+  <symbol id="icon-project" viewBox="0 0 24 24">
     <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-code-xml-icon lucide-code-xml">
       <path d="m18 16 4-4-4-4"/>
       <path d="m6 8-4 4 4 4"/>
       <path d="m14.5 4-5 16"/>
     </g>
-  </svg>
+  </symbol>
 
   <!-- Contact Icon -->
-  <svg id="icon-contact" viewBox="0 0 24 24">
+  <symbol id="icon-contact" viewBox="0 0 24 24">
     <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-phone-icon lucide-phone">
       <path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"/>
     </g>
-  </svg>
+  </symbol>
+
+  <!-- Location Icon -->
+  <symbol id="icon-location" viewBox="0 0 24 24">
+    <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/>
+      <circle cx="12" cy="10" r="3"/>
+    </g>
+  </symbol>
+
+  <!-- Email Icon -->
+  <symbol id="icon-email" viewBox="0 0 24 24">
+    <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"/>
+      <path d="m21.854 2.147-10.94 10.939"/>
+    </g>
+  </symbol>
+
+  <!-- Linkedin Icon -->
+  <symbol id="icon-linkedin" viewBox="0 0 128 128">
+    <path fill="#0076b2" d="M116 3H12a8.91 8.91 0 00-9 8.8v104.42a8.91 8.91 0 009 8.78h104a8.93 8.93 0 009-8.81V11.77A8.93 8.93 0 00116 3z"></path>
+    <path fill="#fff" d="M21.06 48.73h18.11V107H21.06zm9.06-29a10.5 10.5 0 11-10.5 10.49 10.5 10.5 0 0110.5-10.49M50.53 48.73h17.36v8h.24c2.42-4.58 8.32-9.41 17.13-9.41C103.6 47.28 107 59.35 107 75v32H88.89V78.65c0-6.75-.12-15.44-9.41-15.44s-10.87 7.36-10.87 15V107H50.53z"></path>
+  </symbol>
+
 
 </svg>
