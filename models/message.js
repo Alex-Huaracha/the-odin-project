@@ -1,32 +1,24 @@
-import { randomUUID } from 'node:crypto';
-
-export const messages = [
-  {
-    id: 'adde383a-544a-4189-ab62-5ab95c6f3e86',
-    text: 'Hi there!',
-    user: 'Alex',
-    added: new Date(),
-  },
-  {
-    id: 'd61b5c0f-4ca3-4723-a828-39331ac6995c',
-    text: 'Hello World!',
-    user: 'Robo-Warrior',
-    added: new Date(),
-  },
-];
-
+import pool from '../db/db.js';
 export class MessageModel {
   static async getAll() {
-    return messages;
+    const { rows } = await pool.query(
+      'SELECT * FROM messages ORDER BY added DESC'
+    );
+    return rows;
   }
 
   static async create({ input }) {
-    const newMessage = {
-      id: randomUUID(),
-      ...input,
-      added: new Date(),
-    };
-    messages.push(newMessage);
-    return newMessage;
+    const { text, user } = input;
+    const { rows } = await pool.query(
+      'INSERT INTO messages (text, user, added) VALUES ($1, $2, NOW()) RETURNING *',
+      [text, user]
+    );
+    return rows[0];
+  }
+  static async getById(id) {
+    const { rows } = await pool.query('SELECT * FROM messages WHERE id = $1', [
+      id,
+    ]);
+    return rows[0];
   }
 }
