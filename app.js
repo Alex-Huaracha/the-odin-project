@@ -1,9 +1,21 @@
-import express, { json } from 'express';
+import express from 'express';
 import { messagesRouter } from './routes/messages.js';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 app.disable('x-powered-by');
-app.use(json());
+
+// View engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+
+// Middlewares
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.use('/', messagesRouter);
 
