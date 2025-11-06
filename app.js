@@ -1,10 +1,11 @@
-import express from 'express';
+import express, { json } from 'express';
+import { messagesRouter } from './routes/messages.js';
 
 const app = express();
+app.disable('x-powered-by');
+app.use(json());
 
-app.get('/', (req, res) => {
-  res.send('Hello, World!');
-});
+app.use('/', messagesRouter);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
