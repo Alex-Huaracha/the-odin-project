@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem;
+      background-color: #f5f5f5;
+    }
+    h1 {
+      color: #333;
+      margin-bottom: 2rem;
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+    .btn {
+      display: inline-block;
+      padding: 0.75rem 1.5rem;
+      background-color: #007bff;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      transition: background-color 0.2s;
+    }
+    .btn:hover {
+      background-color: #0056b3;
+    }
+    .messages {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .message-card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .message-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+    .message-user {
+      font-weight: bold;
+      color: #007bff;
+    }
+    .message-date {
+      font-size: 0.875rem;
+      color: #666;
+    }
+    .message-text {
+      color: #333;
+      line-height: 1.5;
+      margin-bottom: 1rem;
+    }
+    .message-link {
+      font-size: 0.875rem;
+      color: #007bff;
+      text-decoration: none;
+    }
+    .message-link:hover {
+      text-decoration: underline;
+    }
+    .empty-state {
+      text-align: center;
+      padding: 3rem;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1><%= title %></h1>
+    <a href="/new" class="btn">New Message</a>
+  </div>
+
+  <% if (messages.length === 0) { %>
+    <div class="empty-state">
+      <p>No messages yet. Be the first to post!</p>
+    </div>
+  <% } else { %>
+    <div class="messages">
+      <% messages.forEach(message => { %>
+        <div class="message-card">
+          <div class="message-header">
+            <span class="message-user"><%= message.user %></span>
+            <span class="message-date"><%= message.added.toLocaleDateString() %> <%= message.added.toLocaleTimeString() %></span>
+          </div>
+          <p class="message-text"><%= message.text %></p>
+          <a href="/<%= message.id %>" class="message-link">Open →</a>
+        </div>
+      <% }) %>
+    </div>
+  <% } %>
+</body>
+</html>
