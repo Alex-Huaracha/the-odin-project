@@ -4,4 +4,6 @@ import { MessageController } from '../controllers/messagesController.js';
 export const messagesRouter = Router();
 
 messagesRouter.get('/', MessageController.getAll);
-messagesRouter.post('/', MessageController.create);
+messagesRouter.get('/new', MessageController.getNew);
+messagesRouter.post('/new', MessageController.create);
+messagesRouter.get('/:id', MessageController.getById);
