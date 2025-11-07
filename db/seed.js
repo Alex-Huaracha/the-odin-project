@@ -1,7 +1,5 @@
+import db from './pool.js';
 import 'dotenv/config';
-import pg from 'pg';
-
-const { Client } = pg;
 
 const categoriesData = [
   { name: 'Processors', description: 'Central Processing Units.' },
@@ -37,28 +35,18 @@ const itemsData = [
 ];
 
 async function seedDatabase() {
-  const client = new Client({
-    host: process.env.DATABASE_HOST,
-    port: process.env.DATABASE_PORT,
-    user: process.env.DATABASE_USER,
-    password: process.env.DATABASE_PASSWORD,
-    database: process.env.DATABASE_NAME,
-  });
-
   try {
-    await client.connect();
-    console.log('Connected to database...');
+    const now = await db.query('SELECT NOW()');
+    console.log('Connected to database...', now.rows[0].now);
 
     console.log('Clearing tables...');
-    await client.query(
-      'TRUNCATE TABLE items, categories RESTART IDENTITY CASCADE'
-    );
+    await db.query('TRUNCATE TABLE items, categories RESTART IDENTITY CASCADE');
 
     console.log('Inserting categories...');
     const categoryIdMap = {};
 
     for (const cat of categoriesData) {
-      const res = await client.query(
+      const res = await db.query(
         'INSERT INTO categories (name, description) VALUES ($1, $2) RETURNING id',
         [cat.name, cat.description]
       );
@@ -66,7 +54,6 @@ async function seedDatabase() {
     }
     console.log('Categories inserted.');
 
-    // 3. Insert Items
     console.log('Inserting items...');
     for (const item of itemsData) {
       const categoryId = categoryIdMap[item.category_name];
@@ -75,7 +62,7 @@ async function seedDatabase() {
         continue;
       }
 
-      await client.query(
+      await db.query(
         'INSERT INTO items (name, description, price, stock_quantity, category_id) VALUES ($1, $2, $3, $4, $5)',
         [item.name, item.description, item.price, item.stock, categoryId]
       );
@@ -86,7 +73,7 @@ async function seedDatabase() {
   } catch (err) {
     console.error('Error seeding the database:', err);
   } finally {
-    await client.end();
+    await db.pool.end();
     console.log('Connection closed.');
   }
 }
