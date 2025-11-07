@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <h1>Inventory Management System</h1>
+      </nav>
+    </header>
+
+    <main class="container">
+      <div class="detail-header">
+        <h2><%= item.name %></h2>
+        <div class="detail-actions">
+          <a
+            href="/catalog/item/<%= item.id %>/update"
+            class="btn btn-secondary"
+            >Edit</a
+          >
+          <a href="/catalog/item/<%= item.id %>/delete" class="btn btn-danger"
+            >Delete</a
+          >
+        </div>
+      </div>
+
+      <div class="detail-card">
+        <div class="detail-section">
+          <h3>Item Information</h3>
+          <div class="detail-info">
+            <p><strong>Name:</strong> <%= item.name %></p>
+            <% if (item.description) { %>
+            <p><strong>Description:</strong> <%= item.description %></p>
+            <% } %> <% if (item.price) { %>
+            <p>
+              <strong>Price:</strong>
+              <span class="item-price">$<%= item.price %></span>
+            </p>
+            <% } %> <% if (item.stock !== null && item.stock !== undefined) { %>
+            <p><strong>Stock:</strong> <%= item.stock %> units</p>
+            <% } %> <% if (item.category_name) { %>
+            <p>
+              <strong>Category:</strong>
+              <a href="/catalog/category/<%= item.category_id %>"
+                ><%= item.category_name %></a
+              >
+            </p>
+            <% } %>
+          </div>
+        </div>
+      </div>
+
+      <div class="back-link">
+        <a href="/catalog/items">&larr; Back to Items</a>
+      </div>
+    </main>
+
+    <footer>
+      <p>&copy; 2025 Inventory App | NodeJS Course Project</p>
+    </footer>
+  </body>
+</html>

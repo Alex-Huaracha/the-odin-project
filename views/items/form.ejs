@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <h1>Inventory Management System</h1>
+      </nav>
+    </header>
+
+    <% const isEditing = typeof item !== 'undefined' && item !== null %>
+    <% const formAction = isEditing ? `/catalog/item/${item.id}/update` : '/catalog/item/create' %>
+
+    <main class="container">
+      <div class="form-container">
+        <h2><%= isEditing ? 'Edit Item' : 'Create New Item' %></h2>
+
+        <% if (typeof errors !== 'undefined' && errors && errors.length > 0) { %>
+        <div class="error-messages">
+          <% errors.forEach(error => { %>
+          <p class="error"><%= error.msg %></p>
+          <% }) %>
+        </div>
+        <% } %>
+
+        <form action="<%= formAction %>" method="POST" class="form">
+          <div class="form-group">
+            <label for="name">Item Name *</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              value="<%= isEditing && item.name ? item.name : '' %>"
+              required
+              class="form-input"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="description">Description</label>
+            <textarea
+              id="description"
+              name="description"
+              rows="4"
+              class="form-input"
+            ><%= isEditing && item.description ? item.description : '' %></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="price">Price</label>
+            <input
+              type="number"
+              id="price"
+              name="price"
+              step="0.01"
+              min="0"
+              value="<%= isEditing && item.price ? item.price : '' %>"
+              class="form-input"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="stock">Stock</label>
+            <input
+              type="number"
+              id="stock"
+              name="stock"
+              min="0"
+              value="<%= isEditing && item.stock !== null && item.stock !== undefined ? item.stock : '' %>"
+              class="form-input"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="category_id">Category *</label>
+            <select
+              id="category_id"
+              name="category_id"
+              required
+              class="form-input"
+            >
+              <option value="">-- Select a Category --</option>
+              <% if (categories && categories.length > 0) { %>
+                <% categories.forEach(category => { %>
+                  <option
+                    value="<%= category.id %>"
+                    <%= isEditing && item.category_id == category.id ? 'selected' : '' %>
+                  >
+                    <%= category.name %>
+                  </option>
+                <% }) %>
+              <% } %>
+            </select>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">
+              <%= isEditing ? 'Update Item' : 'Create Item' %>
+            </button>
+            <a href="/catalog/items" class="btn btn-secondary">Cancel</a>
+          </div>
+        </form>
+      </div>
+    </main>
+
+    <footer>
+      <p>&copy; 2025 Inventory App | NodeJS Course Project</p>
+    </footer>
+  </body>
+</html>
