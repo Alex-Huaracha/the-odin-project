@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= category.name %> - Inventory App</title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <h1>Inventory Management System</h1>
+      </nav>
+    </header>
+
+    <main class="container">
+      <div class="detail-header">
+        <h2><%= category.name %></h2>
+        <div class="detail-actions">
+          <a
+            href="/catalog/category/<%= category.id %>/update"
+            class="btn btn-secondary"
+            >Edit</a
+          >
+          <a
+            href="/catalog/category/<%= category.id %>/delete"
+            class="btn btn-danger"
+            >Delete</a
+          >
+        </div>
+      </div>
+
+      <div class="detail-card">
+        <div class="detail-section">
+          <h3>Description</h3>
+          <p><%= category.description || 'No description provided' %></p>
+        </div>
+
+        <div class="detail-section">
+          <h3>Items in this Category</h3>
+          <% if (items && items.length > 0) { %>
+          <ul class="item-list">
+            <% items.forEach(item => { %>
+            <li>
+              <a href="/items/<%= item.id %>"><%= item.name %></a>
+              <% if (item.price) { %>
+              <span class="item-price">$<%= item.price %></span>
+              <% } %>
+            </li>
+            <% }) %>
+          </ul>
+          <% } else { %>
+          <p class="empty-message">No items in this category yet.</p>
+          <a
+            href="/items/create?category=<%= category.id %>"
+            class="btn btn-secondary"
+            >Add Item</a
+          >
+          <% } %>
+        </div>
+      </div>
+
+      <div class="back-link">
+        <a href="/catalog/categories">&larr; Back to Categories</a>
+      </div>
+    </main>
+
+    <footer>
+      <p>&copy; 2025 Inventory App | NodeJS Course Project</p>
+    </footer>
+  </body>
+</html>

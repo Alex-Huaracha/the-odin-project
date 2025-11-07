@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <h1>Inventory Management System</h1>
+      </nav>
+    </header>
+
+    <main class="container">
+      <div class="delete-container">
+        <div class="warning-card">
+          <h2>Delete Category: <%= category.name %></h2>
+
+          <div class="warning-message">
+            <p>
+              <strong>Warning:</strong> You are about to delete this category.
+            </p>
+            <% if (items && items.length > 0) { %>
+            <p class="danger-text">
+              This category contains
+              <strong><%= items.length %></strong> item(s). You must delete or
+              reassign all items before deleting this category.
+            </p>
+            <% } %>
+          </div>
+
+          <div class="detail-info">
+            <p><strong>Name:</strong> <%= category.name %></p>
+            <% if (category.description) { %>
+            <p><strong>Description:</strong> <%= category.description %></p>
+            <% } %>
+          </div>
+
+          <% if (typeof error !== 'undefined' && error) { %>
+          <div class="error-messages">
+            <p class="error"><%= error %></p>
+          </div>
+          <% } %> <% if (!items || items.length === 0) { %>
+          <form
+            action="/catalog/category/<%= category.id %>/delete"
+            method="POST"
+            class="delete-form"
+          >
+            <div class="form-actions">
+              <button type="submit" class="btn btn-danger">
+                Confirm Delete
+              </button>
+              <a
+                href="/catalog/category/<%= category.id %>"
+                class="btn btn-secondary"
+                >Cancel</a
+              >
+            </div>
+          </form>
+          <% } else { %>
+          <div class="form-actions">
+            <a
+              href="/catalog/category/<%= category.id %>"
+              class="btn btn-secondary"
+              >Go Back</a
+            >
+          </div>
+          <% } %>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <p>&copy; 2025 Inventory App | NodeJS Course Project</p>
+    </footer>
+  </body>
+</html>
