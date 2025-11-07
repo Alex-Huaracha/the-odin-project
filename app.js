@@ -1,7 +1,7 @@
 import express from 'express';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import categoryRoutes from './routes/categoryRoutes.js';
+import categoryRoutes from './routes/index.js';
 
 const app = express();
 app.disable('x-powered-by');
