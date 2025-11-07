@@ -42,7 +42,7 @@
           <ul class="item-list">
             <% items.forEach(item => { %>
             <li>
-              <a href="/items/<%= item.id %>"><%= item.name %></a>
+              <a href="/catalog/item/<%= item.id %>"><%= item.name %></a>
               <% if (item.price) { %>
               <span class="item-price">$<%= item.price %></span>
               <% } %>
@@ -51,8 +51,9 @@
           </ul>
           <% } else { %>
           <p class="empty-message">No items in this category yet.</p>
+
           <a
-            href="/items/create?category=<%= category.id %>"
+            href="/catalog/item/create?category=<%= category.id %>"
             class="btn btn-secondary"
             >Add Item</a
           >
