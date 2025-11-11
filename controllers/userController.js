@@ -1,8 +1,7 @@
-// controllers/userController.js
-
 import { body, validationResult } from 'express-validator';
 import bcrypt from 'bcrypt';
 import { User } from '../models/user.js';
+import passport from 'passport';
 
 const validateUser = [
   body('firstName', 'First name must not be empty.')
@@ -73,9 +72,34 @@ export const user_signup_post = [
         hashedPassword: hashedPassword,
       });
 
-      res.redirect('/');
+      res.redirect('/log-in');
     } catch (err) {
       return next(err);
     }
   },
 ];
+
+export const user_login_get = (req, res, next) => {
+  const messages = req.flash('error');
+
+  res.render('log-in', {
+    title: 'Log In',
+    errors: messages,
+  });
+};
+
+export const user_login_post = passport.authenticate('local', {
+  successRedirect: '/',
+  failureRedirect: '/log-in',
+  failureFlash: true,
+});
+
+export const user_logout_get = (req, res, next) => {
+  req.logout((err) => {
+    if (err) {
+      return next(err);
+    }
+
+    res.redirect('/');
+  });
+};
