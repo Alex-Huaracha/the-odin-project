@@ -103,3 +103,52 @@ export const user_logout_get = (req, res, next) => {
     res.redirect('/');
   });
 };
+
+export const join_club_get = (req, res, next) => {
+  console.log('req.user:', req.user);
+  if (!req.user) {
+    return res.redirect('/log-in');
+  }
+
+  res.render('join-club', {
+    title: 'Join the Club',
+  });
+};
+
+export const join_club_post = [
+  body('passcode', 'Passcode must not be empty.')
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+
+  async (req, res, next) => {
+    try {
+      if (!req.user) {
+        return res.redirect('/log-in');
+      }
+
+      const errors = validationResult(req);
+
+      if (!errors.isEmpty()) {
+        return res.render('join-club', {
+          title: 'Join the Club',
+          errors: errors.array(),
+          body: req.body,
+        });
+      }
+
+      if (req.body.passcode !== process.env.MEMBER_PASSCODE) {
+        return res.render('join-club', {
+          title: 'Join the Club',
+          errors: [{ msg: 'Incorrect passcode. Try again.' }],
+          body: req.body,
+        });
+      }
+
+      await User.updateMembership({ id: req.user.id });
+      res.redirect('/');
+    } catch (err) {
+      return next(err);
+    }
+  },
+];

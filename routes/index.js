@@ -18,4 +18,8 @@ router.post('/log-in', userController.user_login_post);
 // Log Out Route
 router.get('/log-out', userController.user_logout_get);
 
+// Membership Join Group
+router.get('/join-club', userController.join_club_get);
+router.post('/join-club', userController.join_club_post);
+
 export default router;

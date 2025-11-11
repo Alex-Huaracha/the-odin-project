@@ -7,6 +7,7 @@ import passport from 'passport';
 import flash from 'connect-flash';
 import './config/passport.js';
 import indexRouter from './routes/index.js';
+
 const app = express();
 app.disable('x-powered-by');
 
