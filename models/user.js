@@ -23,7 +23,18 @@ export class User {
   }
 
   static async findByEmail({ email }) {
-    const sql = 'SELECT * FROM users WHERE email = $1';
+    const sql = `
+    SELECT
+      id,
+      firstName AS "firstName",
+      lastName AS "lastName",
+      email,
+      password,
+      isMember AS "isMember",
+      isAdmin AS "isAdmin"
+    FROM users
+    WHERE email = $1
+  `;
 
     try {
       const { rows } = await pool.query(sql, [email]);
@@ -35,7 +46,18 @@ export class User {
   }
 
   static async findById({ id }) {
-    const sql = 'SELECT * FROM users WHERE id = $1';
+    const sql = `
+    SELECT
+      id,
+      firstName AS "firstName",
+      lastName AS "lastName",
+      email,
+      password,
+      isMember AS "isMember",
+      isAdmin AS "isAdmin"
+    FROM users
+    WHERE id = $1
+  `;
 
     try {
       const { rows } = await pool.query(sql, [id]);
