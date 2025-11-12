@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %> | The Speakeasy</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container">
+        <div class="logo">
+          <a href="/">The Speakeasy</a>
+        </div>
+
+        <nav class="main-nav">
+          <a href="/" class="nav-link">Home</a>
+
+          <% if (currentUser) { %>
+          <a href="/create-message" class="nav-link">Create Message</a>
+
+          <% if (!currentUser.isMember) { %>
+          <a href="/join-club" class="nav-link">Join the Club</a>
+          <% } %>
+
+          <div class="user-menu">
+            <span class="user-greeting">
+              Welcome, <strong><%= currentUser.firstName %></strong>! <% if
+              (currentUser.isMember) { %>
+              <span class="badge">Member</span>
+              <% } %> <% if (currentUser.isAdmin) { %>
+              <span class="badge admin">Admin</span>
+              <% } %>
+            </span>
+            <a href="/log-out" class="btn btn-secondary">Log Out</a>
+          </div>
+          <% } else { %>
+          <a href="/sign-up" class="btn btn-primary">Sign Up</a>
+          <a href="/log-in" class="btn btn-secondary">Log In</a>
+          <% } %>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
