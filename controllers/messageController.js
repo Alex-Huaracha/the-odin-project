@@ -69,7 +69,7 @@ export const message_delete_post = async (req, res, next) => {
       return res.redirect('/');
     }
 
-    await Message.delete({ id: req.body.messageid });
+    await Message.delete({ id: req.body.messageId });
 
     res.redirect('/');
   } catch (err) {
