@@ -8,29 +8,33 @@
   <p>No messages yet. Be the first to post!</p>
   <% } else { %> <% messages.forEach(message => { %>
   <div class="message">
-    <div class="message-header">
-      <h3><%= message.title %></h3>
+    <div class="message-content">
+      <div class="message-header">
+        <h3><%= message.title %></h3>
 
-      <% if (currentUser && currentUser.ismember) { %>
-      <span class="message-meta">
-        by
-        <strong
-          ><%= message.authorfirstname %> <%= message.authorlastname %></strong
-        >
-        on <%= new Date(message.timestamp).toLocaleDateString() %>
-      </span>
-      <% } else { %>
-      <span class="message-meta">by <strong>Anonymous</strong></span>
-      <% } %>
+        <% if (currentUser && currentUser.isMember) { %>
+        <span class="message-meta">
+          by
+          <strong>
+            <%= message.authorFirstName %> <%= message.authorLastName %>
+          </strong>
+          on <%= new Date(message.timestamp).toLocaleDateString() %>
+        </span>
+        <% } else { %>
+        <span class="message-meta">by <strong>Anonymous</strong></span>
+        <% } %>
+      </div>
+
+      <p><%= message.text %></p>
     </div>
 
-    <p><%= message.text %></p>
-
-    <% if (currentUser && currentUser.isadmin) { %>
-    <form action="/delete-message" method="POST" class="delete-form">
-      <input type="hidden" name="messageid" value="<%= message.id %>" />
-      <button type="submit">Delete</button>
-    </form>
+    <% if (currentUser && currentUser.isAdmin) { %>
+    <div class="message-footer">
+      <form action="/delete-message" method="POST" class="delete-form">
+        <input type="hidden" name="messageId" value="<%= message.id %>" />
+        <button type="submit">Delete</button>
+      </form>
+    </div>
     <% } %>
   </div>
   <% }) %> <% } %>

@@ -230,6 +230,12 @@ button[type='submit']:hover {
   padding: 1.5rem;
   border-radius: 8px;
   box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+}
+
+.message-content {
+  flex: 1;
 }
 
 .message-header {
@@ -255,11 +261,23 @@ button[type='submit']:hover {
   margin: 1rem 0;
 }
 
+.message-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
+}
+
 .delete-form {
-  display: inline;
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  background: none;
+  box-shadow: none;
+  max-width: none;
 }
 
 .delete-form button {
+  width: auto;
   background: var(--accent-color);
   color: white;
   border: none;
