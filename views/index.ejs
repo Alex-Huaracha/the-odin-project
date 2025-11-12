@@ -3,9 +3,108 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title><%= title %></title>
+    <style>
+      body {
+        font-family: sans-serif;
+        margin: 2em;
+      }
+      nav {
+        margin-bottom: 2em;
+        border-bottom: 1px solid #ccc;
+        padding-bottom: 1em;
+      }
+      nav a {
+        margin-right: 1em;
+      }
+      .message-board {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5em;
+      }
+      .message {
+        border: 1px solid #eee;
+        padding: 1em;
+        border-radius: 5px;
+      }
+      .message-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .message h3 {
+        margin-top: 0;
+      }
+      .message-meta {
+        font-size: 0.9em;
+        color: #555;
+      }
+      .delete-form {
+        display: inline;
+      }
+      .delete-form button {
+        background: #c94a4a;
+        color: white;
+        border: none;
+        padding: 5px 8px;
+        border-radius: 3px;
+        cursor: pointer;
+      }
+    </style>
   </head>
   <body>
-    <h1>Welcome to The Speakeasy</h1>
+    <nav>
+      <a href="/">Home</a>
+      <% if (currentUser) { %>
+      <span>Welcome, <strong><%= currentUser.firstName %></strong>!</span>
+      <a href="/create-message">Create Message</a>
+
+      <% if (!currentUser.isMember) { %>
+      <a href="/join-club">Join the Club</a>
+      <% } %>
+
+      <a href="/log-out">Log Out</a>
+      <% } else { %>
+      <a href="/sign-up">Sign Up</a>
+      <a href="/log-in">Log In</a>
+      <% } %>
+    </nav>
+
+    <h1><%= title %></h1>
+    <p>Welcome to the main message board.</p>
+
+    <div class="message-board">
+      <% if (messages.length === 0) { %>
+      <p>No messages yet. Be the first to post!</p>
+      <% } else { %> <% messages.forEach(message => { %>
+      <div class="message">
+        <div class="message-header">
+          <h3><%= message.title %></h3>
+
+          <% if (currentUser && currentUser.isMember) { %>
+          <span class="message-meta">
+            by
+            <strong
+              ><%= message.authorFirstName %> <%= message.authorLastName
+              %></strong
+            >
+            on <%= message.timestamp.toLocaleDateString() %>
+          </span>
+          <% } else { %>
+          <span class="message-meta">by <strong>Anonymous</strong></span>
+          <% } %>
+        </div>
+
+        <p><%= message.text %></p>
+
+        <% if (currentUser && currentUser.isAdmin) { %>
+        <form action="/delete-message" method="POST" class="delete-form">
+          <input type="hidden" name="messageid" value="<%= message.id %>" />
+          <button type="submit">Delete</button>
+        </form>
+        <% } %>
+      </div>
+      <% }) %> <% } %>
+    </div>
   </body>
 </html>
