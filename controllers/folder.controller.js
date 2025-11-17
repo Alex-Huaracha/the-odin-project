@@ -1,6 +1,5 @@
 import prisma from '../db/prismaClient.js';
-import fs from 'node:fs/promises';
-import path from 'node:path';
+import cloudinary from '../config/cloudinary.js';
 
 export const postFolder = async (req, res, next) => {
   try {
@@ -74,17 +73,13 @@ async function deleteFilesInFolder(folderId, userId) {
     where: { folderId: folderId, userId: userId },
   });
 
-  const deleteFilePromises = files.map((file) => {
-    const filePath = path.resolve(
-      process.cwd(),
-      'uploads',
-      userId,
-      file.storageId
-    );
-    return fs.unlink(filePath).catch((err) => {
-      console.warn(`Physical file not found: ${filePath}`);
-    });
-  });
+  const deleteFilePromises = files.map((file) =>
+    cloudinary.uploader
+      .destroy(file.storageId)
+      .catch((err) =>
+        console.warn(`Could not delete from Cloudinary: ${file.storageId}`)
+      )
+  );
   await Promise.all(deleteFilePromises);
 
   const subFolders = await prisma.folder.findMany({

@@ -1,14 +1,13 @@
 import prisma from '../db/prismaClient.js';
-import path from 'node:path';
-import fs from 'fs/promises';
+import cloudinary from '../config/cloudinary.js';
 
 export const uploadFile = async (req, res, next) => {
   try {
     const { parentId } = req.body;
     const redirectUrl = parentId ? `/folders/${parentId}` : '/dashboard';
 
-    if (req.fileValidationError) {
-      req.flash('error_msg', req.fileValidationError);
+    if (req.err) {
+      req.flash('error_msg', 'Upload error: ' + req.err.message);
       return res.redirect(redirectUrl);
     }
 
@@ -19,15 +18,21 @@ export const uploadFile = async (req, res, next) => {
 
     const userId = req.user.id;
 
-    const { originalname, mimetype, filename, size, path: filePath } = req.file;
+    const {
+      originalname,
+      mimetype,
+      size,
+      path: fileUrl,
+      filename: publicId,
+    } = req.file;
 
     await prisma.file.create({
       data: {
         name: originalname,
         mimetype: mimetype,
         size: size,
-        storageId: filename,
-        url: `/${filePath}`,
+        storageId: publicId,
+        url: fileUrl,
         userId: userId,
         folderId: parentId || null,
       },
@@ -80,23 +85,7 @@ export const downloadFile = async (req, res, next) => {
       return res.redirect('/dashboard');
     }
 
-    const filePath = path.resolve(
-      process.cwd(),
-      'uploads',
-      userId,
-      file.storageId
-    );
-
-    res.download(filePath, file.name, (err) => {
-      if (err) {
-        console.error(err);
-        req.flash(
-          'error_msg',
-          'The file could not be downloaded. It may have been deleted.'
-        );
-        res.redirect('back');
-      }
-    });
+    res.redirect(file.url);
   } catch (err) {
     return next(err);
   }
@@ -119,25 +108,10 @@ export const deleteFile = async (req, res, next) => {
       return res.redirect('/dashboard');
     }
 
-    const filePath = path.resolve(
-      process.cwd(),
-      'uploads',
-      userId,
-      file.storageId
-    );
-
-    try {
-      await fs.unlink(filePath);
-    } catch (fsErr) {
-      console.warn(
-        `The physical file was not found: ${filePath}, but the record will be deleted.`
-      );
-    }
+    await cloudinary.uploader.destroy(file.storageId);
 
     await prisma.file.delete({
-      where: {
-        id: fileId,
-      },
+      where: { id: fileId },
     });
 
     req.flash('success_msg', 'File deleted successfully!');
