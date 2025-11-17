@@ -6,6 +6,9 @@ import expressSession from 'express-session';
 import { PrismaSessionStore } from '@quixo3/prisma-session-store';
 import { PrismaClient } from '@prisma/client';
 import passport from 'passport';
+import configurePassport from './config/passport.js';
+import authRoutes from './routes/auth.routes.js';
+import flash from 'connect-flash';
 
 dotenv.config();
 
@@ -37,18 +40,28 @@ app.use(
   })
 );
 
-// Initialize Passport.js
+// Config Passport.js
 app.use(passport.initialize());
 app.use(passport.session());
+configurePassport(passport);
+
+// Flash Error messages
+app.use(flash());
+
+// Middleware to set flash messages in res.locals
+app.use((req, res, next) => {
+  res.locals.error_msg = req.flash('error_msg')[0];
+  res.locals.success_msg = req.flash('success_msg')[0];
+  res.locals.error = req.flash('error')[0];
+  next();
+});
+
+// Routes
+app.use('/', authRoutes);
 
 // Views
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-
-app.get('/', (req, res) => {
-  console.log(req.session);
-  res.send('Server configured with Database Sessions.');
-});
 
 const PORT = process.env.PORT || 3000;
 
