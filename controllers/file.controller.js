@@ -5,8 +5,12 @@ import fs from 'fs/promises';
 export const uploadFile = async (req, res, next) => {
   try {
     const { parentId } = req.body;
-
     const redirectUrl = parentId ? `/folders/${parentId}` : '/dashboard';
+
+    if (req.fileValidationError) {
+      req.flash('error_msg', req.fileValidationError);
+      return res.redirect(redirectUrl);
+    }
 
     if (!req.file) {
       req.flash('error_msg', 'No file was selected.');

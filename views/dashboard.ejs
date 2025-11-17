@@ -4,6 +4,19 @@
     <title>Dashboard</title>
   </head>
   <body>
+
+    <% if (success_msg) { %>
+      <div style="color: green; border: 1px solid green; padding: 10px; margin-bottom: 15px;">
+        <%= success_msg %>
+      </div>
+    <% } %>
+
+    <% if (error_msg) { %>
+      <div style="color: red; border: 1px solid red; padding: 10px; margin-bottom: 15px;">
+        <%= error_msg %>
+      </div>
+    <% } %>
+
     <h1>Welcome to your Dashboard, <%= user.username %>!</h1>
 
     <p>Your user ID is: <%= user.id %></p>

@@ -16,7 +16,21 @@ const storage = multer.diskStorage({
 });
 
 const fileFilter = (req, file, cb) => {
-  cb(null, true);
+  const allowedTypes = /jpeg|jpg|png|gif|pdf|doc|docx|txt/;
+
+  const extname = allowedTypes.test(
+    path.extname(file.originalname).toLowerCase()
+  );
+
+  const mimetype = allowedTypes.test(file.mimetype);
+
+  if (mimetype && extname) {
+    return cb(null, true);
+  } else {
+    req.fileValidationError =
+      'Invalid file type. Only allowed: JPEG, PNG, GIF, PDF, DOC, DOCX, TXT.';
+    cb(null, false);
+  }
 };
 
 const upload = multer({
