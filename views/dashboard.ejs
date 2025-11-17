@@ -11,5 +11,45 @@
     <form action="/logout" method="POST">
       <button type="submit">Log Out</button>
     </form>
+
+
+    <hr>
+
+    <h2>Create New Folder</h2>
+    <form action="/folders" method="POST">
+      <input type="text" name="folderName" placeholder="Folder Name" required>
+      <button type="submit">Create</button>
+    </form>
+
+    <hr>
+
+    <h2>Folders</h2>
+    <ul>
+      <% if (folders.length > 0) { %>
+        <% folders.forEach(folder => { %>
+          <li>
+            <a href="/folders/<%= folder.id %>">
+              <%= folder.name %>
+            </a>
+            (Created: <%= folder.createdAt.toDateString() %>)
+          </li>
+        <% }) %>
+      <% } else { %>
+        <li>No folders available.</li>
+      <% } %>
+    </ul>
+
+    <h2>Files</h2>
+    <ul>
+      <% if (files.length > 0) { %>
+        <% files.forEach(file => { %>
+          <li>
+            <%= file.name %> (<%= file.mimetype %>)
+          </li>
+        <% }) %>
+      <% } else { %>
+        <li>No files available.</li>
+      <% } %>
+    </ul>
   </body>
 </html>

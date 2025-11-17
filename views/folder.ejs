@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en"></html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Folder: <%= currentFolder.name %></title>
+  </head>
+  <body>
+    <h1>Viewing: <%= currentFolder.name %></h1>
+    <a href="/dashboard">Back to Dashboard (Root)</a>
+
+    <hr />
+
+    <h2>Create New Subfolder</h2>
+    <form action="/folders" method="POST">
+      <input
+        type="text"
+        name="folderName"
+        placeholder="Subfolder name"
+        required
+      />
+
+      <input type="hidden" name="parentId" value="<%= currentFolder.id %>" />
+
+      <button type="submit">Create</button>
+    </form>
+
+    <hr />
+
+    <h2>Subfolders</h2>
+    <ul>
+      <% if (folders.length > 0) { %> <% folders.forEach(folder => { %>
+      <li>
+        <a href="/folders/<%= folder.id %>"> <%= folder.name %> </a>
+      </li>
+      <% }) %> <% } else { %>
+      <li>No subfolders.</li>
+      <% } %>
+    </ul>
+
+    <h2>Files in this folder</h2>
+    <ul>
+      <% if (files.length > 0) { %> <% files.forEach(file => { %>
+      <li><%= file.name %></li>
+      <% }) %> <% } else { %>
+      <li>No files in this folder.</li>
+      <% } %>
+    </ul>
+  </body>
+</html>
