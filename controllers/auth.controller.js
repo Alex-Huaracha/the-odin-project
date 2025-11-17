@@ -1,9 +1,7 @@
 import bcrypt from 'bcrypt';
 import prisma from '../db/prismaClient.js';
-import passport from 'passport';
 
 export const getRegister = (req, res) => {
-  // (Pronto crearemos la vista 'register.ejs')
   res.render('register');
 };
 
@@ -52,8 +50,30 @@ export const postLogout = (req, res, next) => {
   });
 };
 
-export const getDashboard = (req, res) => {
-  res.render('dashboard', { user: req.user });
+export const getDashboard = async (req, res, next) => {
+  try {
+    const rootFolders = await prisma.folder.findMany({
+      where: {
+        userId: req.user.id,
+        parentId: null,
+      },
+    });
+
+    const rootFiles = await prisma.file.findMany({
+      where: {
+        userId: req.user.id,
+        folderId: null,
+      },
+    });
+
+    res.render('dashboard', {
+      user: req.user,
+      folders: rootFolders,
+      files: rootFiles,
+    });
+  } catch (err) {
+    return next(err);
+  }
 };
 
 export const getIndex = (req, res) => {
