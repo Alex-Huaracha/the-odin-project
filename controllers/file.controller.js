@@ -62,7 +62,7 @@ export const getFileDetails = async (req, res, next) => {
       return res.redirect('/dashboard');
     }
 
-    res.render('file-details', { file: file });
+    res.render('file-details', { file: file, user: req.user });
   } catch (err) {
     return next(err);
   }
