@@ -1,12 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Home - File Uploader</title>
+    <link rel="stylesheet" href="/css/reset.css" />
+    <link rel="stylesheet" href="/css/variables.css" />
+    <link rel="stylesheet" href="/css/main.css" />
+    <link rel="stylesheet" href="/css/components.css" />
   </head>
   <body>
-    <h1>Welcome to File Uploader</h1>
-    <p>Please log in or sign up.</p>
-    <a href="/login">Login</a>
-    <a href="/register">Register</a>
+    <div class="auth-container">
+      <div class="auth-card" style="max-width: 500px">
+        <div class="auth-header">
+          <h1 class="auth-title" style="font-size: 2.5rem">📁 File Uploader</h1>
+          <p
+            class="auth-subtitle"
+            style="font-size: 1.125rem; margin-top: 1rem"
+          >
+            Your personal cloud storage solution
+          </p>
+        </div>
+
+        <div
+          style="
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background-color: var(--bg-tertiary);
+            border-radius: var(--radius-md);
+            border-left: 4px solid var(--accent-primary);
+          "
+        >
+          <p style="color: var(--text-secondary); line-height: 1.8">
+            Upload, organize, and share your files securely. Create folders,
+            manage your content, and access it from anywhere.
+          </p>
+        </div>
+
+        <div style="display: flex; gap: 1rem; flex-direction: column">
+          <a
+            href="/login"
+            class="btn btn-primary btn-block"
+            style="padding: 1rem"
+          >
+            Sign In
+          </a>
+          <a
+            href="/register"
+            class="btn btn-secondary btn-block"
+            style="padding: 1rem"
+          >
+            Create Account
+          </a>
+        </div>
+
+        <div
+          style="
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-light);
+          "
+        >
+          <div
+            style="
+              display: grid;
+              grid-template-columns: repeat(3, 1fr);
+              gap: 1.5rem;
+              text-align: center;
+            "
+          >
+            <div>
+              <div style="font-size: 1.5rem; margin-bottom: 0.5rem">🗂️</div>
+              <div style="font-size: 0.875rem; color: var(--text-secondary)">
+                Organize
+              </div>
+            </div>
+            <div>
+              <div style="font-size: 1.5rem; margin-bottom: 0.5rem">☁️</div>
+              <div style="font-size: 0.875rem; color: var(--text-secondary)">
+                Store
+              </div>
+            </div>
+            <div>
+              <div style="font-size: 1.5rem; margin-bottom: 0.5rem">🔗</div>
+              <div style="font-size: 0.875rem; color: var(--text-secondary)">
+                Share
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
