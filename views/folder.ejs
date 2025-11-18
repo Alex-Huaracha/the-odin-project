@@ -1,105 +1,417 @@
 <!DOCTYPE html>
-<html lang="en"></html>
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Folder: <%= currentFolder.name %></title>
+    <link rel="stylesheet" href="/css/reset.css" />
+    <link rel="stylesheet" href="/css/variables.css" />
+    <link rel="stylesheet" href="/css/main.css" />
+    <link rel="stylesheet" href="/css/components.css" />
   </head>
   <body>
-    <% if (success_msg) { %>
-      <div style="color: green; border: 1px solid green; padding: 10px; margin-bottom: 15px;">
-        <%= success_msg %>
+    <!-- Navbar -->
+    <nav class="navbar">
+      <div class="container nav-content">
+        <div class="nav-brand">📁 File Uploader</div>
+        <div class="nav-links">
+          <a href="/dashboard" class="nav-link">← Back to Dashboard</a>
+          <span class="nav-link">👤 <%= user.username %></span>
+          <form action="/logout" method="POST" style="display: inline">
+            <button type="submit" class="btn btn-secondary btn-sm">
+              Log Out
+            </button>
+          </form>
+        </div>
       </div>
-    <% } %>
+    </nav>
 
-    <% if (error_msg) { %>
-      <div style="color: red; border: 1px solid red; padding: 10px; margin-bottom: 15px;">
-        <%= error_msg %>
+    <!-- Main Content -->
+    <div class="container">
+      <!-- Flash Messages -->
+      <div class="flash-messages">
+        <% if (success_msg) { %>
+        <div class="alert alert-success"><%= success_msg %></div>
+        <% } %> <% if (error_msg) { %>
+        <div class="alert alert-error"><%= error_msg %></div>
+        <% } %>
       </div>
-    <% } %>
-    <h1>Viewing: <%= currentFolder.name %></h1>
-    <form action="/folders/<%= currentFolder.id %>/update" method="POST" style="display: inline-block; margin-left: 20px;">
-      <input type="text" name="newName" placeholder="New name" value="<%= currentFolder.name %>" required>
-      <button type="submit">Rename</button>
-    </form>
-    <a href="/dashboard">Back to Dashboard (Root)</a>
-    <hr>
 
+      <!-- Breadcrumb -->
+      <div class="breadcrumb">
+        <div class="breadcrumb-item">
+          <a href="/dashboard" class="breadcrumb-link">My Drive</a>
+        </div>
+        <span class="breadcrumb-separator">/</span>
+        <div class="breadcrumb-item">
+          <span><%= currentFolder.name %></span>
+        </div>
+      </div>
 
-    <hr />
+      <!-- Folder Header with Rename -->
+      <div class="page-header">
+        <div
+          style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap"
+        >
+          <h1 class="page-title" style="margin-bottom: 0">
+            📁 <%= currentFolder.name %>
+          </h1>
+          <button
+            onclick="toggleModal('renameModal')"
+            class="btn btn-secondary btn-sm"
+          >
+            ✏️ Rename
+          </button>
+        </div>
+        <p class="page-subtitle">
+          Created <%= currentFolder.createdAt.toLocaleDateString() %>
+        </p>
+      </div>
 
-    <h2>Create New Subfolder</h2>
-    <form action="/folders" method="POST">
-      <input
-        type="text"
-        name="folderName"
-        placeholder="Subfolder name"
-        required
-      />
+      <!-- Action Buttons -->
+      <div
+        style="display: flex; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap"
+      >
+        <button onclick="toggleModal('subfolderModal')" class="btn btn-primary">
+          📁 New Subfolder
+        </button>
+        <button onclick="toggleModal('uploadModal')" class="btn btn-secondary">
+          📤 Upload File
+        </button>
+        <button onclick="toggleModal('shareModal')" class="btn btn-secondary">
+          🔗 Share Folder
+        </button>
+      </div>
 
-      <input type="hidden" name="parentId" value="<%= currentFolder.id %>" />
+      <!-- Subfolders Section -->
+      <section style="margin-bottom: 3rem">
+        <h2
+          style="
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+          "
+        >
+          📂 Subfolders
+        </h2>
 
-      <button type="submit">Create</button>
-    </form>
+        <% if (folders.length > 0) { %>
+        <div class="grid grid-2">
+          <% folders.forEach(folder => { %>
+          <div class="folder-item">
+            <div class="item-icon">📁</div>
+            <div class="item-info">
+              <div class="item-name">
+                <a
+                  href="/folders/<%= folder.id %>"
+                  style="color: var(--text-primary)"
+                >
+                  <%= folder.name %>
+                </a>
+              </div>
+              <div class="item-meta">
+                Created <%= folder.createdAt.toLocaleDateString() %>
+              </div>
+            </div>
+          </div>
+          <% }) %>
+        </div>
+        <% } else { %>
+        <div class="empty-state">
+          <div class="empty-state-icon">📁</div>
+          <p class="empty-state-text">No subfolders yet</p>
+        </div>
+        <% } %>
+      </section>
 
-    <hr />
+      <!-- Files Section -->
+      <section style="margin-bottom: 3rem">
+        <h2
+          style="
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+          "
+        >
+          📄 Files
+        </h2>
 
-    <h2>Subfolders</h2>
-    <ul>
-      <% if (folders.length > 0) { %> <% folders.forEach(folder => { %>
-      <li>
-        <a href="/folders/<%= folder.id %>"> <%= folder.name %> </a>
-      </li>
-      <% }) %> <% } else { %>
-      <li>No subfolders.</li>
-      <% } %>
-    </ul>
+        <% if (files.length > 0) { %>
+        <div class="grid grid-2">
+          <% files.forEach(file => { %>
+          <div class="file-item">
+            <div class="item-icon">
+              <% if (file.mimetype.startsWith('image/')) { %> 🖼️ <% } else if
+              (file.mimetype.startsWith('video/')) { %> 🎥 <% } else if
+              (file.mimetype.includes('pdf')) { %> 📕 <% } else if
+              (file.mimetype.includes('zip') || file.mimetype.includes('rar')) {
+              %> 📦 <% } else { %> 📄 <% } %>
+            </div>
+            <div class="item-info">
+              <div class="item-name">
+                <a
+                  href="/files/<%= file.id %>"
+                  style="color: var(--text-primary)"
+                >
+                  <%= file.name %>
+                </a>
+              </div>
+              <div class="item-meta">
+                <%= (file.size / 1024).toFixed(2) %> KB • <%=
+                file.createdAt.toLocaleDateString() %>
+              </div>
+            </div>
+          </div>
+          <% }) %>
+        </div>
+        <% } else { %>
+        <div class="empty-state">
+          <div class="empty-state-icon">📄</div>
+          <p class="empty-state-text">No files in this folder</p>
+        </div>
+        <% } %>
+      </section>
 
-    <hr>
-    <h2>Upload File to this Folder</h2>
-    <form action="/files/upload" method="POST" enctype="multipart/form-data">
-      <input type="file" name="file" required>
-      <input type="hidden" name="parentId" value="<%= currentFolder.id %>">
-      <button type="submit">Upload File</button>
-    </form>
+      <!-- Danger Zone -->
+      <section>
+        <div
+          class="card"
+          style="
+            border-color: var(--accent-danger);
+            background-color: rgba(239, 68, 68, 0.05);
+          "
+        >
+          <div class="card-header">
+            <h3 style="color: var(--accent-danger); font-size: 1.125rem">
+              ⚠️ Danger Zone
+            </h3>
+          </div>
+          <div class="card-body">
+            <p style="margin-bottom: 1rem">
+              Delete this folder and all its contents permanently. This action
+              cannot be undone.
+            </p>
+            <button onclick="confirmDelete()" class="btn btn-danger">
+              🗑️ Delete Folder
+            </button>
+          </div>
+        </div>
+      </section>
+    </div>
 
-    <h2>Files in this folder</h2>
-    <ul>
-      <% if (files.length > 0) { %>
-      <% files.forEach(file => { %>
-        <li>
-        <a href="/files/<%= file.id %>">
-          <%= file.name %>
-        </a>
-        </li>
-      <% }) %>
-      <% } else { %>
-      <li>No files in this folder.</li>
-      <% } %>
-    </ul>
+    <!-- Rename Folder Modal -->
+    <div id="renameModal" class="modal-overlay" style="display: none">
+      <div class="modal">
+        <div class="modal-header">
+          <h3 class="modal-title">Rename Folder</h3>
+        </div>
+        <form action="/folders/<%= currentFolder.id %>/update" method="POST">
+          <div class="form-group">
+            <label for="newName" class="form-label">New Folder Name</label>
+            <input
+              type="text"
+              id="newName"
+              name="newName"
+              class="form-input"
+              value="<%= currentFolder.name %>"
+              required
+              autofocus
+            />
+          </div>
+          <div style="display: flex; gap: 0.75rem">
+            <button type="submit" class="btn btn-primary" style="flex: 1">
+              Rename
+            </button>
+            <button
+              type="button"
+              onclick="toggleModal('renameModal')"
+              class="btn btn-secondary"
+              style="flex: 1"
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
 
-    <hr>
-    <h3>Share Folder</h3>
-    <form action="/folders/<%= currentFolder.id %>/share" method="POST" style="background: #f0f0f0; padding: 15px; border-radius: 5px;">
-      <label for="duration">Link Duration:</label>
-      <select name="duration" id="duration">
-      <option value="1">1 Day</option>
-      <option value="7">7 Days</option>
-      <option value="30">30 Days</option>
-      </select>
-      <button type="submit">Generate Public Link</button>
-    </form>
+    <!-- Create Subfolder Modal -->
+    <div id="subfolderModal" class="modal-overlay" style="display: none">
+      <div class="modal">
+        <div class="modal-header">
+          <h3 class="modal-title">Create Subfolder</h3>
+        </div>
+        <form action="/folders" method="POST">
+          <div class="form-group">
+            <label for="folderName" class="form-label">Subfolder Name</label>
+            <input
+              type="text"
+              id="folderName"
+              name="folderName"
+              class="form-input"
+              placeholder="Documents"
+              required
+              autofocus
+            />
+            <input
+              type="hidden"
+              name="parentId"
+              value="<%= currentFolder.id %>"
+            />
+          </div>
+          <div style="display: flex; gap: 0.75rem">
+            <button type="submit" class="btn btn-primary" style="flex: 1">
+              Create
+            </button>
+            <button
+              type="button"
+              onclick="toggleModal('subfolderModal')"
+              class="btn btn-secondary"
+              style="flex: 1"
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
 
-    <hr>
-    <h2 style="color: red;">Danger Zone</h2>
+    <!-- Upload File Modal -->
+    <div id="uploadModal" class="modal-overlay" style="display: none">
+      <div class="modal">
+        <div class="modal-header">
+          <h3 class="modal-title">Upload File</h3>
+        </div>
+        <form
+          action="/files/upload"
+          method="POST"
+          enctype="multipart/form-data"
+        >
+          <div class="form-group">
+            <label for="file" class="form-label">Choose File</label>
+            <input
+              type="file"
+              id="file"
+              name="file"
+              class="form-input"
+              required
+              style="padding: 0.5rem"
+            />
+            <input
+              type="hidden"
+              name="parentId"
+              value="<%= currentFolder.id %>"
+            />
+            <p
+              style="
+                margin-top: 0.5rem;
+                font-size: 0.8125rem;
+                color: var(--text-muted);
+              "
+            >
+              Maximum file size: 10MB
+            </p>
+          </div>
+          <div style="display: flex; gap: 0.75rem">
+            <button type="submit" class="btn btn-primary" style="flex: 1">
+              Upload
+            </button>
+            <button
+              type="button"
+              onclick="toggleModal('uploadModal')"
+              class="btn btn-secondary"
+              style="flex: 1"
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Share Folder Modal -->
+    <div id="shareModal" class="modal-overlay" style="display: none">
+      <div class="modal">
+        <div class="modal-header">
+          <h3 class="modal-title">Share Folder</h3>
+        </div>
+        <form action="/folders/<%= currentFolder.id %>/share" method="POST">
+          <div class="form-group">
+            <label for="duration" class="form-label">Link Duration</label>
+            <select name="duration" id="duration" class="form-select">
+              <option value="1">1 Day</option>
+              <option value="7">7 Days</option>
+              <option value="30">30 Days</option>
+            </select>
+          </div>
+          <div style="display: flex; gap: 0.75rem">
+            <button type="submit" class="btn btn-success" style="flex: 1">
+              Generate Link
+            </button>
+            <button
+              type="button"
+              onclick="toggleModal('shareModal')"
+              class="btn btn-secondary"
+              style="flex: 1"
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Delete Confirmation Form (hidden) -->
     <form
+      id="deleteForm"
       action="/folders/<%= currentFolder.id %>/delete"
       method="POST"
-      onsubmit="return confirm('ARE YOU SURE?\nThis will permanently delete this folder and ALL subfolders and files it contains.');"
-    >
-      <button type="submit" style="background-color: red; color: white; border: none; padding: 10px 20px; cursor: pointer;">
-      Delete this Folder
-      </button>
-    </form>
+      style="display: none"
+    ></form>
+
+    <script>
+      function toggleModal(modalId) {
+        const modal = document.getElementById(modalId);
+        if (modal.style.display === 'none') {
+          modal.style.display = 'flex';
+        } else {
+          modal.style.display = 'none';
+        }
+      }
+
+      function confirmDelete() {
+        if (
+          confirm(
+            'ARE YOU SURE?\n\nThis will permanently delete this folder and ALL subfolders and files it contains.\n\nThis action cannot be undone.'
+          )
+        ) {
+          document.getElementById('deleteForm').submit();
+        }
+      }
+
+      // Close modal when clicking outside
+      document.querySelectorAll('.modal-overlay').forEach((overlay) => {
+        overlay.addEventListener('click', (e) => {
+          if (e.target === overlay) {
+            overlay.style.display = 'none';
+          }
+        });
+      });
+
+      // Close modal with ESC key
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          document.querySelectorAll('.modal-overlay').forEach((overlay) => {
+            overlay.style.display = 'none';
+          });
+        }
+      });
+    </script>
   </body>
 </html>
