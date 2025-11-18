@@ -1,0 +1,17 @@
+generator client {
+  provider = "prisma-client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       Int     @id @default(autoincrement())
+  username String  @unique
+  password String  // Aquí guardaremos el hash de bcrypt
+  posts    Post[]  // Relación 1:N (Un usuario tiene muchos posts)
+}
+
+model
