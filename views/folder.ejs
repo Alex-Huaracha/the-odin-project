@@ -79,6 +79,18 @@
     </ul>
 
     <hr>
+    <h3>Share Folder</h3>
+    <form action="/folders/<%= currentFolder.id %>/share" method="POST" style="background: #f0f0f0; padding: 15px; border-radius: 5px;">
+      <label for="duration">Link Duration:</label>
+      <select name="duration" id="duration">
+      <option value="1">1 Day</option>
+      <option value="7">7 Days</option>
+      <option value="30">30 Days</option>
+      </select>
+      <button type="submit">Generate Public Link</button>
+    </form>
+
+    <hr>
     <h2 style="color: red;">Danger Zone</h2>
     <form
       action="/folders/<%= currentFolder.id %>/delete"

@@ -11,6 +11,7 @@ import flash from 'connect-flash';
 import authRoutes from './routes/auth.routes.js';
 import folderRoutes from './routes/folder.routes.js';
 import fileRoutes from './routes/file.routes.js';
+import shareRoutes from './routes/share.routes.js';
 
 dotenv.config();
 
@@ -62,6 +63,7 @@ app.use((req, res, next) => {
 app.use('/', authRoutes);
 app.use('/', folderRoutes);
 app.use('/', fileRoutes);
+app.use('/', shareRoutes);
 
 // Views
 app.set('views', path.join(__dirname, 'views'));
