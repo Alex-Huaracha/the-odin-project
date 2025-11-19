@@ -41,3 +41,24 @@ export const getPostById = async (req, res) => {
     res.status(500).json({ error: 'Error retrieving the post' });
   }
 };
+
+export const createPost = async (req, res) => {
+  const { title, content, published } = req.body;
+
+  const authorId = req.user.id;
+
+  try {
+    const newPost = await prisma.post.create({
+      data: {
+        title,
+        content,
+        published: published || false,
+        authorId: authorId,
+      },
+    });
+
+    res.status(201).json(newPost);
+  } catch (error) {
+    res.status(500).json({ error: 'Error al crear el post' });
+  }
+};
