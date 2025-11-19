@@ -44,3 +44,12 @@ Content-Type: application/json
   "username": "gymFan123",
   "content": "Great post! Really enjoyed reading it."
 }
+
+### Get All Posts (Admin Only, Protected Route)
+GET http://localhost:3000/api/posts/admin/all
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjNiMzQ3YmExLTg1YzItNDg3Ny04ZjRmLWUwMTFiYjEzNWRjMSIsInVzZXJuYW1lIjoiYWRtaW4iLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NjM1ODc1NTAsImV4cCI6MTc2MzY3Mzk1MH0.0WaMlorXBwKYfWHz0eT1Cfz885KHLazFzs9pM1NTnw0
+
+
+### Get Post by ID with Comments
+GET http://localhost:3000/api/posts/88cf110d-1de5-4112-9c44-80c26345df23
+

@@ -120,3 +120,16 @@ export const getAllPostsAdmin = async (req, res) => {
     res.status(500).json({ error: 'Error retrieving posts' });
   }
 };
+
+export const getPostByIdAdmin = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const post = await prisma.post.findUnique({
+      where: { id: id },
+    });
+    if (!post) return res.status(404).json({ error: 'Post not found' });
+    res.json(post);
+  } catch (error) {
+    res.status(500).json({ error: 'Error retrieving the post' });
+  }
+};
