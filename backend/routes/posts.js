@@ -20,6 +20,6 @@ router.post('/', verifyToken, verifyAdmin, createPost);
 router.put('/:id', verifyToken, verifyAdmin, updatePost);
 router.delete('/:id', verifyToken, verifyAdmin, deletePost);
 
-router.post('/:postId/comments', createComment);
+router.post('/:postId/comments', verifyToken, createComment);
 
 export default router;

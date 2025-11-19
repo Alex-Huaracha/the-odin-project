@@ -1,15 +1,17 @@
 import { prisma } from '../prisma/client.js';
 
 export const createComment = async (req, res) => {
-  const { content, username } = req.body;
+  const { content } = req.body;
   const { postId } = req.params;
+
+  const authorId = req.user.id;
 
   try {
     const comment = await prisma.comment.create({
       data: {
         content,
-        username: username || 'Anonymous',
         postId: postId,
+        authorId: authorId,
       },
     });
     res.status(201).json(comment);

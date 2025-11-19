@@ -23,7 +23,13 @@ export const getPostById = async (req, res) => {
     const post = await prisma.post.findUnique({
       where: { id: id },
       include: {
-        comments: true,
+        comments: {
+          include: {
+            author: {
+              select: { username: true },
+            },
+          },
+        },
         author: { select: { username: true } },
       },
     });
