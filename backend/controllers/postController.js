@@ -100,3 +100,17 @@ export const deletePost = async (req, res) => {
     res.status(500).json({ error: 'Error deleting the post' });
   }
 };
+
+export const getAllPostsAdmin = async (req, res) => {
+  try {
+    const posts = await prisma.post.findMany({
+      include: {
+        author: { select: { username: true } },
+      },
+      orderBy: { createdAt: 'desc' },
+    });
+    res.json(posts);
+  } catch (error) {
+    res.status(500).json({ error: 'Error retrieving posts' });
+  }
+};

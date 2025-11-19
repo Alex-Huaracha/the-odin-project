@@ -5,18 +5,20 @@ import {
   createPost,
   updatePost,
   deletePost,
+  getAllPostsAdmin,
 } from '../controllers/postController.js';
-import { verifyToken } from '../middleware/verifyToken.js';
+import { verifyAdmin, verifyToken } from '../middleware/verifyToken.js';
 import { createComment } from '../controllers/commentController.js';
 
 const router = Router();
 
 router.get('/', getPublishedPosts);
 router.get('/:id', getPostById);
+router.get('/admin/all', verifyToken, verifyAdmin, getAllPostsAdmin);
 
-router.post('/', verifyToken, createPost);
-router.put('/:id', verifyToken, updatePost);
-router.delete('/:id', verifyToken, deletePost);
+router.post('/', verifyToken, verifyAdmin, createPost);
+router.put('/:id', verifyToken, verifyAdmin, updatePost);
+router.delete('/:id', verifyToken, verifyAdmin, deletePost);
 
 router.post('/:postId/comments', createComment);
 

@@ -19,3 +19,12 @@ export const verifyToken = (req, res, next) => {
     res.status(403).json({ error: 'Invalid or expired token.' });
   }
 };
+
+export const verifyAdmin = (req, res, next) => {
+  if (req.user.role !== 'ADMIN') {
+    return res.status(403).json({
+      error: 'Access denied. Administrator permissions are required.',
+    });
+  }
+  next();
+};
