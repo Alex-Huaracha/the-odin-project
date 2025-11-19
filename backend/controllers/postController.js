@@ -84,3 +84,19 @@ export const updatePost = async (req, res) => {
     res.status(500).json({ error: 'Error updating the post' });
   }
 };
+
+export const deletePost = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    await prisma.post.delete({
+      where: { id: id },
+    });
+    res.json({ message: 'Post deleted successfully' });
+  } catch (error) {
+    if (error.code === 'P2025') {
+      return res.status(404).json({ error: 'Post not found' });
+    }
+    res.status(500).json({ error: 'Error deleting the post' });
+  }
+};
