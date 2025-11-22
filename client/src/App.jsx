@@ -133,13 +133,8 @@ function App() {
   return (
     <div className="app">
       <header className="header">
-        <div className="header-content">
-          <h1 className="title">Find the Pokémon</h1>
-          <div className="timer">
-            <span className="timer-icon">⏱</span>
-            <span className="timer-value">{formatTime(currentTime)}</span>
-          </div>
-        </div>
+        <h1 className="title">Find the Pokémon</h1>
+
         <div className="character-list">
           {characters.map((char) => (
             <div
@@ -148,9 +143,19 @@ function App() {
                 foundCharacters.some((f) => f.name === char) ? 'found' : ''
               }`}
             >
-              {char}
+              <img
+                src={`/src/assets/${char.toLowerCase()}.png`}
+                alt={char}
+                className="character-image"
+              />
+              <span className="character-name">{char}</span>
             </div>
           ))}
+        </div>
+
+        <div className="timer">
+          <span className="timer-icon">⏱</span>
+          <span className="timer-value">{formatTime(currentTime)}</span>
         </div>
       </header>
 
