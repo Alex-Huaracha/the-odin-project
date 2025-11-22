@@ -29,7 +29,7 @@ function App() {
 
   const fetchLeaderboard = async () => {
     try {
-      const response = await fetch('http://localhost:3000/api/scores');
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/scores`);
       const data = await response.json();
       setLeaderboard(data);
       setShowLeaderboard(true);
@@ -40,7 +40,7 @@ function App() {
 
   const submitScore = async (e) => {
     e.preventDefault();
-    await fetch('http://localhost:3000/api/scores', {
+    await fetch(`${import.meta.env.VITE_API_URL}/scores`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, time: finalTime }),
@@ -75,7 +75,7 @@ function App() {
     }
 
     try {
-      const response = await fetch('http://localhost:3000/api/validate', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/validate`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
