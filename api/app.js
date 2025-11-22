@@ -1,19 +1,47 @@
 import express from 'express';
 import cors from 'cors';
+import { prisma } from './prisma/client.js';
+
 import 'dotenv/config';
 
 const app = express();
+
 const PORT = process.env.PORT || 3000;
 
-// Middleware
 app.use(cors());
 app.use(express.json());
 
-// Test route
-app.get('/', (req, res) => {
-  res.json({ message: "Hello from Waldo's Backend!" });
+app.post('/api/validate', async (req, res) => {
+  const { characterName, x, y } = req.body;
+
+  console.log(`Validating: ${characterName} at X:${x}, Y:${y}`);
+
+  try {
+    const character = await prisma.character.findFirst({
+      where: { name: characterName },
+    });
+
+    if (!character) {
+      return res.status(404).json({ message: 'Character does not exist' });
+    }
+
+    const isFound =
+      x >= character.minX &&
+      x <= character.maxX &&
+      y >= character.minY &&
+      y <= character.maxY;
+
+    if (isFound) {
+      res.json({ found: true, message: `You found ${characterName}!` });
+    } else {
+      res.json({ found: false, message: 'Keep looking...' });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Server error' });
+  }
 });
 
 app.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}`);
+  console.log(`Server is running on port ${PORT}`);
 });
