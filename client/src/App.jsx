@@ -11,6 +11,8 @@ function App() {
   const [gameFinished, setGameFinished] = useState(false);
   const [finalTime, setFinalTime] = useState(0);
   const [username, setUsername] = useState('');
+  const [leaderboard, setLeaderboard] = useState([]);
+  const [showLeaderboard, setShowLeaderboard] = useState(false);
 
   const totalCharacters = 4;
   const characters = ['Magikarp', 'Weedle', 'Seadra', 'Magnemite'];
@@ -25,6 +27,17 @@ function App() {
     }
   }, [startTime, gameFinished]);
 
+  const fetchLeaderboard = async () => {
+    try {
+      const response = await fetch('http://localhost:3000/api/scores');
+      const data = await response.json();
+      setLeaderboard(data);
+      setShowLeaderboard(true);
+    } catch (error) {
+      console.error('Error fetching leaderboard:', error);
+    }
+  };
+
   const submitScore = async (e) => {
     e.preventDefault();
     await fetch('http://localhost:3000/api/scores', {
@@ -32,8 +45,8 @@ function App() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, time: finalTime }),
     });
-    alert('Score saved!');
-    window.location.reload();
+    setGameFinished(false);
+    fetchLeaderboard();
   };
 
   const handleImageClick = (e) => {
@@ -156,6 +169,9 @@ function App() {
         <div className="timer">
           <span className="timer-icon">⏱</span>
           <span className="timer-value">{formatTime(currentTime)}</span>
+          <button className="btn-leaderboard" onClick={fetchLeaderboard}>
+            🏆 High Scores
+          </button>
         </div>
       </header>
 
@@ -226,6 +242,54 @@ function App() {
                 Save Score
               </button>
             </form>
+          </div>
+        </div>
+      )}
+
+      {showLeaderboard && (
+        <div
+          className="modal-overlay"
+          onClick={() => setShowLeaderboard(false)}
+        >
+          <div className="modal" onClick={(e) => e.stopPropagation()}>
+            <h2 className="modal-title">Hall of Fame</h2>
+
+            <div className="leaderboard-list">
+              {leaderboard.length > 0 ? (
+                <table className="leaderboard-table">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Name</th>
+                      <th>Time</th>
+                      <th>Date</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {leaderboard.map((score, index) => (
+                      <tr
+                        key={score.id}
+                        className={index < 3 ? `rank-${index + 1}` : ''}
+                      >
+                        <td>{index + 1}</td>
+                        <td>{score.username}</td>
+                        <td>{formatTime(score.time)}</td>
+                        <td>{new Date(score.date).toLocaleDateString()}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              ) : (
+                <p>No scores yet. Be the first!</p>
+              )}
+            </div>
+
+            <button
+              className="modal-button secondary"
+              onClick={() => window.location.reload()}
+            >
+              Play Again
+            </button>
           </div>
         </div>
       )}
