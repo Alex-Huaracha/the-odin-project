@@ -1,0 +1,85 @@
+.game-container {
+  position: relative;
+  display: inline-block;
+  cursor: crosshair;
+}
+
+.game-image {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.target-box {
+  color: black;
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.9);
+  border: 2px solid red;
+  border-radius: 5px;
+  padding: 10px;
+  width: 150px;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.target-box ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.target-box li {
+  padding: 5px;
+  cursor: pointer;
+  border-bottom: 1px solid #eee;
+}
+
+.target-box li:hover {
+  background-color: #f0f0f0;
+}
+
+.marker-found {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  border: 3px solid #00ff00;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 255, 0, 0.2);
+  pointer-events: none;
+  box-shadow: 0 0 10px #00ff00;
+}
+
+.feedback-msg {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px 20px;
+  border-radius: 5px;
+  color: white;
+  font-weight: bold;
+  z-index: 100;
+  animation: fadeOut 3s forwards;
+}
+
+.feedback-msg.success {
+  background-color: #4caf50;
+}
+.feedback-msg.error {
+  background-color: #f44336;
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    display: none;
+  }
+}
