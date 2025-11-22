@@ -157,7 +157,7 @@ function App() {
               }`}
             >
               <img
-                src={`/src/assets/${char.toLowerCase()}.png`}
+                src={`/${char.toLowerCase()}.png`}
                 alt={char}
                 className="character-image"
               />
