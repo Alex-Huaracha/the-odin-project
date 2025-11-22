@@ -42,6 +42,36 @@ app.post('/api/validate', async (req, res) => {
   }
 });
 
+app.post('/api/scores', async (req, res) => {
+  const { username, time } = req.body;
+
+  try {
+    const newScore = await prisma.score.create({
+      data: {
+        username,
+        time,
+        levelId: 1,
+      },
+    });
+    res.json(newScore);
+  } catch (error) {
+    res.status(500).json({ error: 'Error saving score' });
+  }
+});
+
+app.get('/api/scores', async (req, res) => {
+  try {
+    const scores = await prisma.score.findMany({
+      where: { levelId: 1 },
+      orderBy: { time: 'asc' },
+      take: 10,
+    });
+    res.json(scores);
+  } catch (error) {
+    res.status(500).json({ error: 'Error retrieving scores' });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
