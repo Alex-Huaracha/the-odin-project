@@ -1,45 +1,123 @@
 @baseUrl = http://localhost:3000/api
 
-### 1. Health Check (Ping the server)
+### 1. Health Check
 GET http://localhost:3000/
 
 ### -------------------------------------------------------
-### AUTHENTICATION TESTS
+### STEP 1: CREATE AND LOGIN USERS
 ### -------------------------------------------------------
 
-### 2. Register a new user (Signup)
-# @name signup
+### Create User A (dev_1)
 POST {{baseUrl}}/auth/signup
 Content-Type: application/json
 
 {
-  "username": "dev_user",
+  "username": "dev_1",
   "password": "123456"
 }
 
-### 3. Attempt to register the SAME user (Should fail with 409)
-POST {{baseUrl}}/auth/signup
-Content-Type: application/json
-
-{
-  "username": "dev_user",
-  "password": "123456"
-}
-
-### 4. Log in (Login)
-# @name login
+### Login User A (dev_1) -> Save their Token
+# @name loginUserA
 POST {{baseUrl}}/auth/login
 Content-Type: application/json
 
 {
-  "username": "dev_user",
+  "username": "dev_1",
   "password": "123456"
 }
 
-### -------------------------------------------------------
-### VARIABLES FOR FUTURE REQUESTS
-### -------------------------------------------------------
-# When you log in, REST Client will save the token from the response
-# to use it in the following steps.
+### Automatic variable for Token A
+# @tokenA = {{loginUserA.response.body.token}}
+@tokenA = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiNWMyNDNhNi04MmM0LTQ4NzktODZiNy0wZTVmNzE1ODE4MTQiLCJ1c2VybmFtZSI6ImRldl8xIiwiaWF0IjoxNzYzODYwODk3LCJleHAiOjE3NjM5NDcyOTd9.1wZDpzLoXZeCwgAOIsRfvp6y-VyO-ob4w9lbnbYAQng
 
-@authToken = {{login.response.body.token}}
+
+### Create User B (dev_2)
+POST {{baseUrl}}/auth/signup
+Content-Type: application/json
+
+{
+  "username": "dev_2",
+  "password": "123456"
+}
+
+### Login User B (dev_2) -> Save their Token
+# @name loginUserB
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "username": "dev_2",
+  "password": "123456"
+}
+
+### Automatic variable for Token B
+# @tokenB = {{loginUserB.response.body.token}}
+@tokenB = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI5MjdjOGFhMy00ZDhiLTQ2OTEtYjU5Ni1mYmVkZjE0MDlhMDUiLCJ1c2VybmFtZSI6ImRldl8yIiwiaWF0IjoxNzYzODYwOTI4LCJleHAiOjE3NjM5NDczMjh9.kHlftZb7c4Hw7oRwPvh6fY65Ay9vJSH3mC2FmRcu9qI
+
+
+### -------------------------------------------------------
+### STEP 2: GET THE IDs (Manual step required)
+### -------------------------------------------------------
+
+### List users (Do this with Token A)
+# LOOK AT THE JSON RESPONSE ON THE RIGHT AND COPY THE IDs
+GET {{baseUrl}}/users
+Authorization: Bearer {{tokenA}}
+
+### -------------------------------------------------------
+### CONVERSATION CONFIGURATION
+### -------------------------------------------------------
+# IMPORTANT: Copy and paste the real IDs you obtained above 👇
+
+@id_UserA = b5c243a6-82c4-4879-86b7-0e5f71581814
+@id_UserB = 927c8aa3-4d8b-4691-b596-fbedf1409a05
+
+
+### -------------------------------------------------------
+### STEP 3: THE SIMULATED CHAT!
+### -------------------------------------------------------
+
+### 1. User A sends a message to User B
+POST {{baseUrl}}/messages
+Authorization: Bearer {{tokenA}}
+Content-Type: application/json
+
+{
+  "receiverId": "{{id_UserB}}",
+  "content": "Hi dev_2! Are you there? 📡"
+}
+
+### 2. User B REPLIES to User A (Note the TokenB)
+POST {{baseUrl}}/messages
+Authorization: Bearer {{tokenB}}
+Content-Type: application/json
+
+{
+  "receiverId": "{{id_UserA}}",
+  "content": "Hi dev_1! Yes, I can hear you loud and clear. The backend worked 🎉"
+}
+
+### 3. User A replies again
+POST {{baseUrl}}/messages
+Authorization: Bearer {{tokenA}}
+Content-Type: application/json
+
+{
+  "receiverId": "{{id_UserB}}",
+  "content": "Great, now we can see the full history."
+}
+
+### -------------------------------------------------------
+### STEP 4: SEE THE FINAL RESULT
+### -------------------------------------------------------
+
+### View the conversation from A's (dev_1) perspective
+# You should see all 3 messages in chronological order
+GET {{baseUrl}}/messages/{{id_UserB}}
+Authorization: Bearer {{tokenA}}
+
+### View the conversation from B's (dev_2) perspective
+# You should see exactly the same
+GET {{baseUrl}}/messages/{{id_UserA}}
+Authorization: Bearer {{tokenB}}
+
