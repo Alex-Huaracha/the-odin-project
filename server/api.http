@@ -1,0 +1,45 @@
+@baseUrl = http://localhost:3000/api
+
+### 1. Health Check (Ping the server)
+GET http://localhost:3000/
+
+### -------------------------------------------------------
+### AUTHENTICATION TESTS
+### -------------------------------------------------------
+
+### 2. Register a new user (Signup)
+# @name signup
+POST {{baseUrl}}/auth/signup
+Content-Type: application/json
+
+{
+  "username": "dev_user",
+  "password": "123456"
+}
+
+### 3. Attempt to register the SAME user (Should fail with 409)
+POST {{baseUrl}}/auth/signup
+Content-Type: application/json
+
+{
+  "username": "dev_user",
+  "password": "123456"
+}
+
+### 4. Log in (Login)
+# @name login
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "username": "dev_user",
+  "password": "123456"
+}
+
+### -------------------------------------------------------
+### VARIABLES FOR FUTURE REQUESTS
+### -------------------------------------------------------
+# When you log in, REST Client will save the token from the response
+# to use it in the following steps.
+
+@authToken = {{login.response.body.token}}
