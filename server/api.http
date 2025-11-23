@@ -1,3 +1,4 @@
+# @no-cookie-jar
 @baseUrl = http://localhost:3000/api
 
 ### 1. Health Check
@@ -28,7 +29,7 @@ Content-Type: application/json
 
 ### Automatic variable for Token A
 # @tokenA = {{loginUserA.response.body.token}}
-@tokenA = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiNWMyNDNhNi04MmM0LTQ4NzktODZiNy0wZTVmNzE1ODE4MTQiLCJ1c2VybmFtZSI6ImRldl8xIiwiaWF0IjoxNzYzODYwODk3LCJleHAiOjE3NjM5NDcyOTd9.1wZDpzLoXZeCwgAOIsRfvp6y-VyO-ob4w9lbnbYAQng
+@tokenA = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIwYzUxZDA3OS1lODNjLTRmZjItOWUwYi1jZDFjNmRhZWU2MDUiLCJ1c2VybmFtZSI6ImRldl8xIiwiaWF0IjoxNzYzOTMwMzA4LCJleHAiOjE3NjQwMTY3MDh9.yrAtnbfDZuB05OYLUPsM--LwWWll9ZXjg1mp3lqjWcE
 
 
 ### Create User B (dev_2)
@@ -52,7 +53,7 @@ Content-Type: application/json
 
 ### Automatic variable for Token B
 # @tokenB = {{loginUserB.response.body.token}}
-@tokenB = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI5MjdjOGFhMy00ZDhiLTQ2OTEtYjU5Ni1mYmVkZjE0MDlhMDUiLCJ1c2VybmFtZSI6ImRldl8yIiwiaWF0IjoxNzYzODYwOTI4LCJleHAiOjE3NjM5NDczMjh9.kHlftZb7c4Hw7oRwPvh6fY65Ay9vJSH3mC2FmRcu9qI
+@tokenB = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxMjUzZDdjNS1iYjMyLTQ3NjEtOWMwMC1lNDY1OGMyYWM5NDkiLCJ1c2VybmFtZSI6ImRldl8yIiwiaWF0IjoxNzYzOTI5ODEzLCJleHAiOjE3NjQwMTYyMTN9.vbQxNqECKWfNyef-6Ho4s86rmlBkttLVCXqh4KOJPc0
 
 
 ### -------------------------------------------------------
@@ -61,16 +62,21 @@ Content-Type: application/json
 
 ### List users (Do this with Token A)
 # LOOK AT THE JSON RESPONSE ON THE RIGHT AND COPY THE IDs
+# Cookie Dev 1
 GET {{baseUrl}}/users
-Authorization: Bearer {{tokenA}}
+Cookie: jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIwYzUxZDA3OS1lODNjLTRmZjItOWUwYi1jZDFjNmRhZWU2MDUiLCJ1c2VybmFtZSI6ImRldl8xIiwiaWF0IjoxNzYzOTMwMzA4LCJleHAiOjE3NjQwMTY3MDh9.yrAtnbfDZuB05OYLUPsM--LwWWll9ZXjg1mp3lqjWcE
+
+#### Cookie Dev 2
+GET {{baseUrl}}/users
+Cookie: jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxMjUzZDdjNS1iYjMyLTQ3NjEtOWMwMC1lNDY1OGMyYWM5NDkiLCJ1c2VybmFtZSI6ImRldl8yIiwiaWF0IjoxNzYzOTMwNDg4LCJleHAiOjE3NjQwMTY4ODh9.xEBuHPFzTnr5jzJgtq5HL93fNAoLfmaL7Z6TjzMiTRM
 
 ### -------------------------------------------------------
 ### CONVERSATION CONFIGURATION
 ### -------------------------------------------------------
 # IMPORTANT: Copy and paste the real IDs you obtained above 👇
 
-@id_UserA = b5c243a6-82c4-4879-86b7-0e5f71581814
-@id_UserB = 927c8aa3-4d8b-4691-b596-fbedf1409a05
+@id_UserA = 0c51d079-e83c-4ff2-9e0b-cd1c6daee605
+@id_UserB = 1253d7c5-bb32-4761-9c00-e4658c2ac949
 
 
 ### -------------------------------------------------------
@@ -79,7 +85,7 @@ Authorization: Bearer {{tokenA}}
 
 ### 1. User A sends a message to User B
 POST {{baseUrl}}/messages
-Authorization: Bearer {{tokenA}}
+Cookie: jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIwYzUxZDA3OS1lODNjLTRmZjItOWUwYi1jZDFjNmRhZWU2MDUiLCJ1c2VybmFtZSI6ImRldl8xIiwiaWF0IjoxNzYzOTMxODM0LCJleHAiOjE3NjQwMTgyMzR9.PmXhWJ-kgCke7UZ2xmdmbtvD6s5GNPjSD_5mPmjsFYo
 Content-Type: application/json
 
 {
@@ -89,7 +95,7 @@ Content-Type: application/json
 
 ### 2. User B REPLIES to User A (Note the TokenB)
 POST {{baseUrl}}/messages
-Authorization: Bearer {{tokenB}}
+Cookie: jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxMjUzZDdjNS1iYjMyLTQ3NjEtOWMwMC1lNDY1OGMyYWM5NDkiLCJ1c2VybmFtZSI6ImRldl8yIiwiaWF0IjoxNzYzOTMxODYwLCJleHAiOjE3NjQwMTgyNjB9.GBBkLT65J4vrRYeXFAHK8zhEFrmldH36rBPIHcqTllk
 Content-Type: application/json
 
 {
@@ -99,7 +105,7 @@ Content-Type: application/json
 
 ### 3. User A replies again
 POST {{baseUrl}}/messages
-Authorization: Bearer {{tokenA}}
+Cookie: jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIwYzUxZDA3OS1lODNjLTRmZjItOWUwYi1jZDFjNmRhZWU2MDUiLCJ1c2VybmFtZSI6ImRldl8xIiwiaWF0IjoxNzYzOTMxODM0LCJleHAiOjE3NjQwMTgyMzR9.PmXhWJ-kgCke7UZ2xmdmbtvD6s5GNPjSD_5mPmjsFYo
 Content-Type: application/json
 
 {
@@ -114,10 +120,10 @@ Content-Type: application/json
 ### View the conversation from A's (dev_1) perspective
 # You should see all 3 messages in chronological order
 GET {{baseUrl}}/messages/{{id_UserB}}
-Authorization: Bearer {{tokenA}}
+Cookie: jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIwYzUxZDA3OS1lODNjLTRmZjItOWUwYi1jZDFjNmRhZWU2MDUiLCJ1c2VybmFtZSI6ImRldl8xIiwiaWF0IjoxNzYzOTMxODM0LCJleHAiOjE3NjQwMTgyMzR9.PmXhWJ-kgCke7UZ2xmdmbtvD6s5GNPjSD_5mPmjsFYo
 
 ### View the conversation from B's (dev_2) perspective
 # You should see exactly the same
 GET {{baseUrl}}/messages/{{id_UserA}}
-Authorization: Bearer {{tokenB}}
+Cookie: jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxMjUzZDdjNS1iYjMyLTQ3NjEtOWMwMC1lNDY1OGMyYWM5NDkiLCJ1c2VybmFtZSI6ImRldl8yIiwiaWF0IjoxNzYzOTMxODYwLCJleHAiOjE3NjQwMTgyNjB9.GBBkLT65J4vrRYeXFAHK8zhEFrmldH36rBPIHcqTllk
 
