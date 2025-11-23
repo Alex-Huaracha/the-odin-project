@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import authRoutes from './routes/auth.js';
 
 dotenv.config();
 
@@ -17,6 +18,8 @@ app.use(express.urlencoded({ extended: true }));
 app.get('/', (req, res) => {
   res.json({ message: 'Welcome to the Messaging App API' });
 });
+
+app.use('/api/auth', authRoutes);
 
 // --- GLOBAL ERROR HANDLING ---
 app.use((err, req, res, next) => {
