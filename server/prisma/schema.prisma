@@ -8,12 +8,11 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  username  String   @unique
+  id        String  @id @default(uuid())
+  username  String  @unique
   password  String
-  bio       String?  @default("Hola! Estoy usando Messaging App.")
+  bio       String? @default("Hi! I'm using Messaging App.")
   avatarUrl String?
-
 
   sentMessages     Message[] @relation("sent")
   receivedMessages Message[] @relation("received")
@@ -22,12 +21,12 @@ model User {
 }
 
 model Message {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @default(uuid())
   content   String
   createdAt DateTime @default(now())
 
-  senderId    Int
-  receiverId  Int
+  senderId   String
+  receiverId String
 
   sender   User @relation("sent", fields: [senderId], references: [id])
   receiver User @relation("received", fields: [receiverId], references: [id])
