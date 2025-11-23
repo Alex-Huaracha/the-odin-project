@@ -36,13 +36,19 @@ export const signup = async (req, res) => {
     // Generate token immediately upon signup for auto-login
     const token = jwt.sign(
       { userId: newUser.id, username: newUser.username },
-      process.env.JWT_SECRET || 'super_secure_secret', // Fallback for dev only
-      { expiresIn: '1h' }
+      process.env.JWT_SECRET,
+      { expiresIn: '24h' }
     );
+
+    res.cookie('jwt', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      maxAge: 24 * 60 * 60 * 1000,
+    });
 
     res.status(201).json({
       message: 'User created successfully',
-      token,
       user: { id: newUser.id, username: newUser.username },
     });
   } catch (error) {
@@ -81,22 +87,50 @@ export const login = async (req, res) => {
     // Generate JWT
     const token = jwt.sign(
       { userId: user.id, username: user.username },
-      process.env.JWT_SECRET || 'super_secure_secret',
-      { expiresIn: '24h' } // 24 hours session
+      process.env.JWT_SECRET,
+      { expiresIn: '24h' }
     );
+
+    // Sent cookie
+    res.cookie('jwt', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      maxAge: 24 * 60 * 60 * 1000, // 1 day
+    });
 
     res.json({
       message: 'Login successful',
-      token,
       user: {
         id: user.id,
         username: user.username,
-        bio: user.bio,
-        avatarUrl: user.avatarUrl,
       },
     });
   } catch (error) {
     console.error('Error in login:', error);
     res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+export const logout = (req, res) => {
+  res.clearCookie('jwt');
+  res.json({ message: 'Logout exitoso' });
+};
+
+export const getCurrentUser = async (req, res) => {
+  try {
+    const user = await prisma.user.findUnique({
+      where: { id: req.user.userId },
+      select: {
+        id: true,
+        username: true,
+        bio: true,
+        avatarUrl: true,
+      },
+    });
+
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to load user data' });
   }
 };

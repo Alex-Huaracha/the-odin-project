@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
 import authRoutes from './routes/auth.js';
 import userRoutes from './routes/users.js';
@@ -13,9 +14,16 @@ const PORT = process.env.PORT || 3000;
 app.disable('x-powered-by');
 
 // --- MIDDLEWARES ---
-app.use(cors());
+app.use(
+  cors({
+    origin: process.env.CLIENT_URL,
+    credentials: true,
+  })
+);
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 // --- ROUTES (Placeholder) ---
 
