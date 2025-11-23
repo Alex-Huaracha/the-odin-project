@@ -2,11 +2,15 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import authRoutes from './routes/auth.js';
+import userRoutes from './routes/users.js';
+import messageRoutes from './routes/messages.js';
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+app.disable('x-powered-by');
 
 // --- MIDDLEWARES ---
 app.use(cors());
@@ -20,6 +24,8 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/messages', messageRoutes);
 
 // --- GLOBAL ERROR HANDLING ---
 app.use((err, req, res, next) => {
