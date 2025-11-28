@@ -16,7 +16,7 @@ POST http://localhost:3000/api/auth/login
 Content-Type: application/json
 
 {
-  "username": "kyra_grady81",
+  "username": "terrill.satterfield43",
   "password": "gymrat123"
 }
 
@@ -39,3 +39,14 @@ Content-Type: application/json
 
 ### Get Posts Feed
 GET http://localhost:3000/api/posts
+
+### Update Post
+PATCH http://localhost:3000/api/posts/5f8fdbc3-6a0f-44c7-8199-a9c2b1888a9c
+Content-Type: application/json
+
+{
+  "content": "[EDIT]: Looking for a workout partner for mornings. Cultura claudeo trans timor administratio."
+}
+
+### Delete Post
+DELETE http://localhost:3000/api/posts/5f8fdbc3-6a0f-44c7-8199-a9c2b1888a9c
