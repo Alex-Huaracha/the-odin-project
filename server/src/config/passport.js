@@ -6,20 +6,22 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 passport.use(
-  new LocalStrategy(async (username, password, done) => {
+  new LocalStrategy(async (loginInput, password, done) => {
     try {
-      const user = await prisma.user.findUnique({
-        where: { username: username },
+      const user = await prisma.user.findFirst({
+        where: {
+          OR: [{ username: loginInput }, { email: loginInput }],
+        },
       });
 
       if (!user) {
-        return done(null, false, { message: 'Usuario incorrecto' });
+        return done(null, false, { message: 'Username or email not found' });
       }
 
       const match = await bcrypt.compare(password, user.password);
 
       if (!match) {
-        return done(null, false, { message: 'Contraseña incorrecta' });
+        return done(null, false, { message: 'Incorrect password' });
       }
 
       return done(null, user);
