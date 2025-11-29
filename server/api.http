@@ -34,7 +34,7 @@ POST http://localhost:3000/api/posts
 Content-Type: application/json
 
 {
-  "content": "Este es mi primer post desde la API!"
+  "content": "[CREATE]: Looking for a workout partner for mornings. Cultura claudeo trans timor administratio."
 }
 
 ### Get Posts Feed
@@ -59,3 +59,19 @@ POST http://localhost:3000/api/users/b22b451f-235b-447a-9550-89a1f216dc85/follow
 
 ### Unfollow User
 DELETE http://localhost:3000/api/users/b22b451f-235b-447a-9550-89a1f216dc85/follow
+
+
+### Get Post by ID
+GET http://localhost:3000/api/posts/cdf29532-d98b-4ea9-afc7-570572e81843
+
+### Answer Post
+POST http://localhost:3000/api/posts
+Content-Type: application/json
+
+{
+  "content": "[ANSWER 2]: I would love to join you for workouts!",
+  "parentId": "cdf29532-d98b-4ea9-afc7-570572e81843"
+}
+
+### Like Post
+POST http://localhost:3000/api/posts/cdf29532-d98b-4ea9-afc7-570572e81843/like

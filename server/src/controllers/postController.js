@@ -138,3 +138,39 @@ export const updatePost = async (req, res, next) => {
     next(error);
   }
 };
+export const getPostById = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    const post = await prisma.post.findUnique({
+      where: { id },
+      include: {
+        author: {
+          select: { username: true, avatarUrl: true, gymGoals: true },
+        },
+        _count: {
+          select: { likes: true, children: true },
+        },
+        children: {
+          orderBy: { createdAt: 'asc' }, // Older comments first (forum style)
+          include: {
+            author: {
+              select: { username: true, avatarUrl: true },
+            },
+            _count: {
+              select: { likes: true },
+            },
+          },
+        },
+      },
+    });
+
+    if (!post) {
+      return res.status(404).json({ message: 'Post not found' });
+    }
+
+    res.json(post);
+  } catch (error) {
+    next(error);
+  }
+};
