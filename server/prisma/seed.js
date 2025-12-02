@@ -3,9 +3,8 @@ import { faker } from '@faker-js/faker';
 import bcrypt from 'bcryptjs';
 
 async function main() {
-  console.log('Starting seeding for Spotter...');
+  console.log('🌱 Starting seeding for Spotter...');
 
-  // 1. Clear the database (reverse order to respect Foreign Keys)
   await prisma.like.deleteMany();
   await prisma.post.deleteMany();
   await prisma.follows.deleteMany();
@@ -13,16 +12,29 @@ async function main() {
 
   console.log('Database cleared.');
 
-  // 2. Create a generic hashed password
   const salt = await bcrypt.genSalt(10);
-  const hashedPassword = await bcrypt.hash('gymrat123', salt);
+  const hashedPassword = await bcrypt.hash('123456', salt);
 
-  // 3. Create 10 Users (Gym Bros & Girls)
-  const users = [];
+  const guestUser = await prisma.user.create({
+    data: {
+      username: 'guest',
+      email: 'guest@spotter.com',
+      password: hashedPassword,
+      bio: 'Tech recruiter visiting Spotter. Looking for Full Stack talent. 💻💪',
+      gymGoals: 'Hire Developers',
+      experience: 'Coach',
+      avatarUrl: 'https://api.dicebear.com/9.x/bottts/svg?seed=Liam',
+    },
+  });
+  console.log('Guest User created.');
+
+  // 4. Create Random Users
+  const randomUsers = [];
   const gymGoals = [
     'Hypertrophy',
-    'Strength (Powerlifting)',
+    'Strength',
     'Fat loss',
+    'Endurance',
     'Calisthenics',
     'Crossfit',
   ];
@@ -30,8 +42,6 @@ async function main() {
 
   for (let i = 0; i < 10; i++) {
     const firstName = faker.person.firstName();
-    // Note: faker.internet.userName() may vary depending on the version,
-    // use internet.username() in recent versions or userName() in older ones.
     const username =
       faker.internet.username({ firstName }).toLowerCase() +
       Math.floor(Math.random() * 100);
@@ -47,11 +57,14 @@ async function main() {
         avatarUrl: faker.image.avatar(),
       },
     });
-    users.push(user);
+    randomUsers.push(user);
   }
-  console.log(`${users.length} users created.`);
+  console.log(`${randomUsers.length} random users created.`);
 
-  // 4. Create Posts
+  // MERGE ALL USERS (Guest + Randoms)
+  const allUsers = [guestUser, ...randomUsers];
+
+  // 6. Create Posts
   const posts = [];
   const gymTopics = [
     'Leg day today and I can’t walk! 💀',
@@ -63,8 +76,15 @@ async function main() {
     'Looking for a workout partner for mornings.',
   ];
 
-  for (const user of users) {
-    const numPosts = Math.floor(Math.random() * 3) + 1;
+  await prisma.post.create({
+    data: {
+      content: 'Hello everyone! Testing this application.',
+      authorId: guestUser.id,
+    },
+  });
+
+  for (const user of allUsers) {
+    const numPosts = Math.floor(Math.random() * 4) + 1; // Between 1 and 4 posts
     for (let j = 0; j < numPosts; j++) {
       const post = await prisma.post.create({
         data: {
@@ -79,12 +99,18 @@ async function main() {
   }
   console.log(`Posts created.`);
 
-  // 5. Create Follows
-  for (const user of users) {
-    const randomUsers = users.filter((u) => u.id !== user.id);
-    const followingCount = Math.floor(Math.random() * 3) + 1;
+  // Create Follows (Social Web) 🕸️
+  for (const user of allUsers) {
+    // Exclude self
+    const possibleTargets = allUsers.filter((u) => u.id !== user.id);
 
-    const toFollow = randomUsers
+    // This code makes the Guest follow exactly 5 users to showcase suggestions
+    // Other users follow between 1 and 4 random users
+    const isGuest = user.id === guestUser.id;
+    const followingCount = isGuest ? 5 : Math.floor(Math.random() * 4) + 1;
+
+    // Shuffle and take N users
+    const toFollow = possibleTargets
       .sort(() => 0.5 - Math.random())
       .slice(0, followingCount);
 
@@ -97,7 +123,18 @@ async function main() {
       });
     }
   }
-  console.log(`Follows created.`);
+
+  const randomPosts = posts.sort(() => 0.5 - Math.random()).slice(0, 5);
+  for (const post of randomPosts) {
+    await prisma.like.create({
+      data: {
+        userId: guestUser.id,
+        postId: post.id,
+      },
+    });
+  }
+
+  console.log(`Follows & Likes created.`);
   console.log('Seeding completed successfully.');
 }
 
