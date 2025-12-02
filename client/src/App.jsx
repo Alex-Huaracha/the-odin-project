@@ -4,6 +4,7 @@ import { Layout } from './components/Layout';
 
 // Pages
 import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
 
 // Temporary component for Home
 const HomePage = () => (
@@ -19,6 +20,7 @@ function App() {
         <Routes>
           {/* Public Route: Login */}
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
 
           {/* Private Routes (With Layout) */}
           <Route
