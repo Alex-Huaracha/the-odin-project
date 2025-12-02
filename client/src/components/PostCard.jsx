@@ -41,22 +41,25 @@ export const PostCard = ({ post, onDelete }) => {
     <div className="border-b border-spotter-border p-4 hover:bg-white/5 transition-colors cursor-pointer">
       <div className="flex gap-3">
         {/* AVATAR */}
-        <div className="shrink-0">
+        <Link to={`/u/${post.author.username}`} className="shrink-0">
           <img
             src={post.author.avatarUrl}
             alt={post.author.username}
             className="w-10 h-10 rounded-full object-cover"
           />
-        </div>
+        </Link>
 
         {/* CONTENT */}
         <div className="flex-1 min-w-0">
           {/* Post Header */}
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-1 text-sm">
-              <span className="font-bold text-spotter-text">
+              <Link
+                to={`/u/${post.author.username}`}
+                className="font-bold text-spotter-text hover:underline"
+              >
                 {post.author.username}
-              </span>
+              </Link>
               <span className="text-spotter-textGray">
                 @{post.author.username}
               </span>

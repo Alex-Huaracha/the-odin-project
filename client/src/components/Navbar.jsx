@@ -34,7 +34,7 @@ export const Navbar = () => {
       {/* Navigation Links */}
       <div className="flex flex-col gap-2 flex-1">
         <NavItem to="/" icon={<Home />} label="Home" />
-        <NavItem to="/profile" icon={<User />} label="Profile" />
+        <NavItem to={`/u/${user?.username}`} icon={<User />} label="Profile" />
 
         {/* POST Button (Icon only on small screens, Text on large screens) */}
         <button className="mt-4 bg-spotter-blue hover:bg-spotter-blueHover text-white p-3 xl:py-3 xl:px-8 rounded-full font-bold shadow-lg transition-all flex justify-center items-center w-fit xl:w-full">

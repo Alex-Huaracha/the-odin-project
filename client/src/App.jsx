@@ -7,6 +7,7 @@ import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import HomePage from './pages/HomePage';
 import PostPage from './pages/PostPage';
+import ProfilePage from './pages/ProfilePage';
 
 function App() {
   return (
@@ -26,6 +27,16 @@ function App() {
               </Layout>
             }
           />
+
+          <Route
+            path="/u/:username"
+            element={
+              <Layout>
+                <ProfilePage />
+              </Layout>
+            }
+          />
+
           <Route
             path="/post/:id"
             element={
