@@ -5,11 +5,13 @@ import {
   getProfile,
   getUserPosts,
   updateProfile,
+  getSuggestions,
 } from '../controllers/userController.js';
 import { isAuthenticated } from '../middleware/auth.js';
 
 const router = Router();
 
+router.get('/suggestions', isAuthenticated, getSuggestions);
 router.get('/:username', getProfile);
 router.get('/:username/posts', getUserPosts);
 

@@ -167,6 +167,7 @@ export const getUserPosts = async (req, res, next) => {
     next(error);
   }
 };
+
 export const updateProfile = async (req, res, next) => {
   try {
     const userId = req.user.id;
@@ -188,6 +189,38 @@ export const updateProfile = async (req, res, next) => {
     });
 
     res.json({ message: 'Profile updated', user: updatedUser });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getSuggestions = async (req, res, next) => {
+  try {
+    const userId = req.user.id;
+
+    const following = await prisma.follows.findMany({
+      where: { followerId: userId },
+      select: { followingId: true },
+    });
+
+    const followingIds = following.map((f) => f.followingId);
+
+    const suggestions = await prisma.user.findMany({
+      where: {
+        AND: [{ id: { not: userId } }, { id: { notIn: followingIds } }],
+      },
+      take: 5,
+
+      orderBy: { createdAt: 'desc' },
+      select: {
+        id: true,
+        username: true,
+        avatarUrl: true,
+        gymGoals: true,
+      },
+    });
+
+    res.json(suggestions);
   } catch (error) {
     next(error);
   }
