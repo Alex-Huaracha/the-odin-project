@@ -6,6 +6,7 @@ import { Layout } from './components/Layout';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import HomePage from './pages/HomePage';
+import PostPage from './pages/PostPage';
 
 function App() {
   return (
@@ -22,6 +23,14 @@ function App() {
             element={
               <Layout>
                 <HomePage />
+              </Layout>
+            }
+          />
+          <Route
+            path="/post/:id"
+            element={
+              <Layout>
+                <PostPage />
               </Layout>
             }
           />
