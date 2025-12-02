@@ -1,4 +1,5 @@
 import { prisma } from '../../prisma/client.js';
+import { updateProfileSchema } from '../schemas/userSchema.js';
 
 export const followUser = async (req, res, next) => {
   try {
@@ -162,6 +163,31 @@ export const getUserPosts = async (req, res, next) => {
     }));
 
     res.json(formattedPosts);
+  } catch (error) {
+    next(error);
+  }
+};
+export const updateProfile = async (req, res, next) => {
+  try {
+    const userId = req.user.id;
+
+    const validatedData = updateProfileSchema.parse(req.body);
+
+    const updatedUser = await prisma.user.update({
+      where: { id: userId },
+      data: validatedData,
+
+      select: {
+        id: true,
+        username: true,
+        email: true,
+        bio: true,
+        gymGoals: true,
+        avatarUrl: true,
+      },
+    });
+
+    res.json({ message: 'Profile updated', user: updatedUser });
   } catch (error) {
     next(error);
   }
