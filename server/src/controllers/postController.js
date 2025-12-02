@@ -144,6 +144,7 @@ export const updatePost = async (req, res, next) => {
 export const getPostById = async (req, res, next) => {
   try {
     const { id } = req.params;
+    const userId = req.user.id;
 
     const post = await prisma.post.findUnique({
       where: { id },
@@ -154,14 +155,25 @@ export const getPostById = async (req, res, next) => {
         _count: {
           select: { likes: true, children: true },
         },
+        // Check if the current user has liked the post
+        likes: {
+          where: { userId: userId },
+          select: { userId: true },
+        },
+        // Include comments with their authors and like counts
         children: {
-          orderBy: { createdAt: 'asc' }, // Older comments first (forum style)
+          orderBy: { createdAt: 'asc' },
           include: {
             author: {
               select: { username: true, avatarUrl: true },
             },
             _count: {
               select: { likes: true },
+            },
+            // Check if the current user has liked each comment
+            likes: {
+              where: { userId: userId },
+              select: { userId: true },
             },
           },
         },
@@ -172,7 +184,17 @@ export const getPostById = async (req, res, next) => {
       return res.status(404).json({ message: 'Post not found' });
     }
 
-    res.json(post);
+    // Transform the post and its comments to include likedByMe
+    const postWithLike = {
+      ...post,
+      likedByMe: post.likes.length > 0,
+      children: post.children.map((child) => ({
+        ...child,
+        likedByMe: child.likes.length > 0,
+      })),
+    };
+
+    res.json(postWithLike);
   } catch (error) {
     next(error);
   }
