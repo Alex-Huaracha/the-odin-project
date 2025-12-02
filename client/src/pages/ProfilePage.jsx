@@ -37,6 +37,13 @@ const ProfilePage = () => {
     window.scrollTo(0, 0);
   }, [username]);
 
+  const handleProfileUpdate = (updatedUser) => {
+    setProfileUser((prev) => ({
+      ...prev,
+      ...updatedUser,
+    }));
+  };
+
   if (loading) return <div className="p-8 text-center">Loading profile...</div>;
   if (error)
     return (
@@ -63,7 +70,10 @@ const ProfilePage = () => {
         </div>
       </div>
 
-      <ProfileHeader profileUser={profileUser} />
+      <ProfileHeader
+        profileUser={profileUser}
+        onProfileUpdate={handleProfileUpdate}
+      />
 
       {/* Post List */}
       {posts.length > 0 ? (

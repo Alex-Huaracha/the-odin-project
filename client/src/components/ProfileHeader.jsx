@@ -2,8 +2,9 @@ import { Calendar, Dumbbell } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useState } from 'react';
 import axios from 'axios';
+import { EditProfileModal } from './EditProfileModal';
 
-export const ProfileHeader = ({ profileUser }) => {
+export const ProfileHeader = ({ profileUser, onProfileUpdate }) => {
   const { user: currentUser } = useAuth();
   const [isFollowing, setIsFollowing] = useState(
     profileUser.isFollowedByMe || false
@@ -12,6 +13,7 @@ export const ProfileHeader = ({ profileUser }) => {
     profileUser._count.followedBy
   );
 
+  const [isEditing, setIsEditing] = useState(false);
   const isMe = currentUser?.username === profileUser.username;
 
   const handleFollowToggle = async () => {
@@ -45,7 +47,10 @@ export const ProfileHeader = ({ profileUser }) => {
 
         {/* Action Button */}
         {isMe ? (
-          <button className="border border-spotter-border text-spotter-text font-bold py-1.5 px-4 rounded-full hover:bg-white/10 transition-colors">
+          <button
+            onClick={() => setIsEditing(true)}
+            className="border border-spotter-border text-spotter-text font-bold py-1.5 px-4 rounded-full hover:bg-white/10 transition-colors"
+          >
             Edit Profile
           </button>
         ) : (
@@ -59,6 +64,14 @@ export const ProfileHeader = ({ profileUser }) => {
           >
             {isFollowing ? 'Unfollow' : 'Follow'}
           </button>
+        )}
+        {isMe && (
+          <EditProfileModal
+            isOpen={isEditing}
+            onClose={() => setIsEditing(false)}
+            currentUser={profileUser}
+            onProfileUpdated={onProfileUpdate}
+          />
         )}
       </div>
 
