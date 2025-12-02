@@ -11,6 +11,7 @@ function LoginPage() {
     formState: { errors },
   } = useForm();
   const { signin, errors: loginErrors, isAuthenticated } = useAuth();
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -20,6 +21,17 @@ function LoginPage() {
   const onSubmit = handleSubmit(async (data) => {
     await signin(data);
   });
+
+  const handleGuestLogin = async () => {
+    try {
+      await signin({
+        username: 'guest',
+        password: '123456',
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <div className="flex h-screen items-center justify-center p-4">
@@ -32,6 +44,14 @@ function LoginPage() {
         <h1 className="text-3xl font-bold text-center mb-8">
           Log in to Spotter
         </h1>
+
+        <button
+          onClick={handleGuestLogin}
+          type="button"
+          className="w-full bg-white text-black font-bold py-3 rounded-full hover:bg-gray-200 transition-colors mb-6 flex items-center justify-center gap-2"
+        >
+          🚀 Login as Guest (Demo)
+        </button>
 
         {/* Backend Errors (e.g., "Incorrect password") */}
         {loginErrors.map((err, i) => (
