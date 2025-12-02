@@ -79,6 +79,7 @@ export const unfollowUser = async (req, res, next) => {
 export const getProfile = async (req, res, next) => {
   try {
     const { username } = req.params;
+    const currentUserId = req.user?.id;
 
     const user = await prisma.user.findUnique({
       where: { username },
@@ -88,6 +89,7 @@ export const getProfile = async (req, res, next) => {
         bio: true,
         gymGoals: true,
         avatarUrl: true,
+        createdAt: true,
         _count: {
           select: {
             followedBy: true,
@@ -102,7 +104,21 @@ export const getProfile = async (req, res, next) => {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    res.json(user);
+    let isFollowedByMe = false;
+
+    if (currentUserId) {
+      const follow = await prisma.follows.findUnique({
+        where: {
+          followerId_followingId: {
+            followerId: currentUserId,
+            followingId: user.id,
+          },
+        },
+      });
+      isFollowedByMe = !!follow;
+    }
+
+    res.json({ ...user, isFollowedByMe });
   } catch (error) {
     next(error);
   }
