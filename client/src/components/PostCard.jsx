@@ -16,8 +16,8 @@ const formatDate = (dateString) => {
 
 export const PostCard = ({ post, onDelete }) => {
   const { user } = useAuth();
+  const [isLiked, setIsLiked] = useState(post.likedByMe || false);
   const [likes, setLikes] = useState(post._count?.likes || 0);
-  const [isLiked, setIsLiked] = useState(false); // TODO: Sync with Backend
 
   // Check if the post belongs to the current user to show the delete button
   const isMyPost = user?.username === post.author.username;

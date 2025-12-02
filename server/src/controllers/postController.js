@@ -56,10 +56,19 @@ export const getFeed = async (req, res, next) => {
         _count: {
           select: { likes: true, children: true }, // Count likes and replies
         },
+        likes: {
+          where: { userId: userId },
+          select: { userId: true }, // To check if the current user has liked the post
+        },
       },
     });
 
-    res.json(posts);
+    const formattedPosts = posts.map((post) => ({
+      ...post,
+      likedByMe: post.likes.length > 0, // Check if the current user has liked the post
+    }));
+
+    res.json(formattedPosts);
   } catch (error) {
     next(error);
   }
