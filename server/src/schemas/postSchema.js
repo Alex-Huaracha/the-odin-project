@@ -11,6 +11,9 @@ export const createPostSchema = z
       .max(280, 'You exceeded the 280-character limit'), // Twitter rule
 
     // parentId is optional, but if provided, MUST be a UUID string
-    parentId: z.uuid({ message: 'Parent ID must be a valid UUID' }).optional(),
+    parentId: z
+      .uuid({ message: 'Parent ID must be a valid UUID' })
+      .nullable()
+      .optional(),
   })
   .strict();
