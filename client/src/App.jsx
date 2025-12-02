@@ -5,13 +5,7 @@ import { Layout } from './components/Layout';
 // Pages
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
-
-// Temporary component for Home
-const HomePage = () => (
-  <div className="p-4">
-    <h1>Welcome to Home (Protected)</h1>
-  </div>
-);
+import HomePage from './pages/HomePage';
 
 function App() {
   return (
