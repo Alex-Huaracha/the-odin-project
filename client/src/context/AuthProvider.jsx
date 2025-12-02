@@ -55,6 +55,14 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // Update user data in context
+  const updateUser = (updatedUserData) => {
+    setUser((prevUser) => ({
+      ...prevUser,
+      ...updatedUserData,
+    }));
+  };
+
   // Check if the user is logged in on mount
   useEffect(() => {
     const checkLogin = async () => {
@@ -92,6 +100,7 @@ export const AuthProvider = ({ children }) => {
         signup,
         signin,
         logout,
+        updateUser,
         loading,
         user,
         isAuthenticated,
