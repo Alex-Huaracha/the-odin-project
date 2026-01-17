@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem;
+      background-color: #f5f5f5;
+    }
+    h1 {
+      color: #333;
+      margin-bottom: 2rem;
+    }
+    .message-detail {
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .message-meta {
+      display: flex;
+      gap: 2rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid #f0f0f0;
+    }
+    .meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+    .meta-label {
+      font-size: 0.875rem;
+      color: #666;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+    .meta-value {
+      font-size: 1.125rem;
+      color: #333;
+    }
+    .meta-value.user {
+      color: #007bff;
+      font-weight: bold;
+    }
+    .message-content {
+      font-size: 1.125rem;
+      line-height: 1.6;
+      color: #333;
+      margin-bottom: 2rem;
+    }
+    .back-link {
+      display: inline-block;
+      padding: 0.75rem 1.5rem;
+      background-color: #6c757d;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      transition: background-color 0.2s;
+    }
+    .back-link:hover {
+      background-color: #545b62;
+    }
+  </style>
+</head>
+<body>
+  <h1><%= title %></h1>
+  
+  <div class="message-detail">
+    <div class="message-meta">
+      <div class="meta-item">
+        <span class="meta-label">From</span>
+        <span class="meta-value user"><%= message.user %></span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Date</span>
+        <span class="meta-value"><%= message.added.toLocaleDateString() %></span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Time</span>
+        <span class="meta-value"><%= message.added.toLocaleTimeString() %></span>
+      </div>
+    </div>
+
+    <div class="message-content">
+      <%= message.text %>
+    </div>
+
+    <a href="/" class="back-link">← Back to Messages</a>
+  </div>
+</body>
+</html>

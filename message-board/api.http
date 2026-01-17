@@ -1,0 +1,11 @@
+### All messages
+GET http://localhost:3000/
+
+### POST message
+POST http://localhost:3000/
+Content-Type: application/json
+
+{
+  "text": "Hello, world! from Alice",
+  "user": "Alice"
+}
