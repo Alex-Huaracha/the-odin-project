@@ -1,0 +1,40 @@
+<%- include('partials/header') %>
+
+<h1><%= title %></h1>
+<p>Share your thoughts with the club members.</p>
+
+<% if (typeof errors !== 'undefined' && errors.length > 0) { %>
+<ul class="errors">
+  <% errors.forEach(error => { %>
+  <li><%= error.msg %></li>
+  <% }) %>
+</ul>
+<% } %>
+
+<form action="/create-message" method="POST">
+  <div>
+    <label for="title">Title:</label>
+    <input
+      type="text"
+      id="title"
+      name="title"
+      required
+      value="<%= (typeof body !== 'undefined') ? body.title : '' %>"
+    />
+  </div>
+
+  <div>
+    <label for="text">Message:</label>
+    <textarea id="text" name="text" rows="5" required>
+<%= (typeof body !== 'undefined') ? body.text : '' %></textarea
+    >
+  </div>
+
+  <button type="submit">Post Message</button>
+</form>
+
+<p style="text-align: center; margin-top: 1rem">
+  <a href="/">Back to Messages</a>
+</p>
+
+<%- include('partials/footer') %>
