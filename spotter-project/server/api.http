@@ -1,0 +1,77 @@
+### Register
+POST http://localhost:3000/api/auth/register
+Content-Type: application/json
+
+{
+  "username": "soynuevo",
+  "email": "nuevo@gym.com",
+  "password": "123"
+}
+
+### Logout
+POST http://localhost:3000/api/auth/logout
+
+### Login
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "terrill.satterfield43",
+  "password": "gymrat123"
+}
+
+### Login
+# POST http://localhost:3000/api/auth/login
+# Content-Type: application/json
+
+# {
+#   "username": "nuevo@gym.com",
+#   "password": "123"
+# }
+
+### Create Post
+POST http://localhost:3000/api/posts
+Content-Type: application/json
+
+{
+  "content": "[CREATE]: Looking for a workout partner for mornings. Cultura claudeo trans timor administratio."
+}
+
+### Get Posts Feed
+GET http://localhost:3000/api/posts
+
+### Update Post
+PATCH http://localhost:3000/api/posts/5f8fdbc3-6a0f-44c7-8199-a9c2b1888a9c
+Content-Type: application/json
+
+{
+  "content": "[EDIT]: Looking for a workout partner for mornings. Cultura claudeo trans timor administratio."
+}
+
+### Delete Post
+DELETE http://localhost:3000/api/posts/5f8fdbc3-6a0f-44c7-8199-a9c2b1888a9c
+
+### Get User Profile
+GET http://localhost:3000/api/users/lemuel.bergstrom81
+
+### Follow User
+POST http://localhost:3000/api/users/b22b451f-235b-447a-9550-89a1f216dc85/follow
+
+### Unfollow User
+DELETE http://localhost:3000/api/users/b22b451f-235b-447a-9550-89a1f216dc85/follow
+
+
+### Get Post by ID
+GET http://localhost:3000/api/posts/cdf29532-d98b-4ea9-afc7-570572e81843
+
+### Answer Post
+POST http://localhost:3000/api/posts
+Content-Type: application/json
+
+{
+  "content": "[ANSWER 6]: I would love to join you for workouts!",
+  "parentId": "cdf29532-d98b-4ea9-afc7-570572e81843"
+}
+
+### Like Post
+POST http://localhost:3000/api/posts/cdf29532-d98b-4ea9-afc7-570572e81843/like
