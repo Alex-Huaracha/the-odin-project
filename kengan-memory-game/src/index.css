@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&family=Rubik+Burned&display=swap');
+
+:root {
+  /* Colors */
+  --bg-primary: #242424;
+  --bg-secondary: #00000065;
+  --bg-tertiary: #00000040;
+
+  /* Text color */
+  --text-color: #ffffffeb;
+  --text-color-secondary: #eb0909;
+
+  /* Text Button color */
+  --text-button: #81e6d9;
+
+  /* Button Color */
+  --button-bg: #81e6d9;
+
+  /* Link Color */
+  --link-color: #ff5fc1;
+
+  /* Typography */
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.25rem;
+  --font-size-xl: 1.5rem;
+
+  /* Font Family Game*/
+  --font-family-game: 'Rubik Burned', system-ui;
+  --font-weight-game: 400;
+  --font-style-game: normal;
+
+  /* Font Family */
+  --font-family-base: 'Roboto', sans-serif;
+}
+
+body {
+  font-family: var(--font-family-base);
+  background-color: var(--bg-primary);
+  color: var(--text-color);
+  min-height: 100vh;
+  /* Mobile-first typography */
+  font-size: var(--font-base);
+}
