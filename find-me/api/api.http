@@ -1,0 +1,9 @@
+### post to /api/validate
+POST http://localhost:3000/api/validate
+Content-Type: application/json
+
+{
+  "characterName": "Seadra",
+  "x": 5,
+  "y": 5
+}
