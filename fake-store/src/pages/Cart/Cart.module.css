@@ -1,0 +1,152 @@
+/* Container principal */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+/* Header */
+.header {
+  margin-bottom: 1.5rem;
+}
+
+.header h1 {
+  font-size: 1.5rem;
+  margin-bottom: 0.25rem;
+  color: var(--tc-primary);
+}
+
+.header p {
+  color: var(--tc-secondary);
+  font-size: 0.875rem;
+}
+
+/* Empty Cart */
+.emptyCart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  gap: 1rem;
+  text-align: center;
+}
+
+.emptyCart h2 {
+  font-size: 1.5rem;
+  color: #1a1a1a;
+}
+
+.emptyCart p {
+  color: #666;
+  font-size: 1rem;
+}
+
+.shopButton {
+  margin-top: 1rem;
+  padding: 0.75rem 2rem;
+  background-color: #ff8c00;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.shopButton:hover {
+  background-color: #ff7300;
+}
+
+/* Cart Content */
+.cartContent {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.itemsList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Summary */
+.summary {
+  background: #e0e0e0;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+.summary h2 {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+  color: #1a1a1a;
+}
+
+.summaryRow {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+  font-size: 0.95rem;
+  color: #666;
+}
+
+.divider {
+  height: 1px;
+  background: #e0e0e0;
+  margin: 1rem 0;
+}
+
+.summaryTotal {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 1.5rem;
+}
+
+.checkoutButton {
+  width: 100%;
+  padding: 1rem;
+  background-color: #ff8c00;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.checkoutButton:hover {
+  background-color: #ff7300;
+}
+
+/* Tablet */
+@media (min-width: 768px) {
+  .container {
+    padding: 2rem;
+  }
+
+  .header h1 {
+    font-size: 2rem;
+  }
+
+  .cartContent {
+    flex-direction: row;
+    gap: 2rem;
+  }
+
+  .itemsList {
+    flex: 2;
+  }
+
+  .summary {
+    flex: 1;
+    align-self: flex-start;
+    position: sticky;
+    top: 1rem;
+  }
+}

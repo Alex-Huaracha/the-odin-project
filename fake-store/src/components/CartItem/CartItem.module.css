@@ -1,0 +1,143 @@
+/* Cart Item */
+.cartItem {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 1rem;
+  padding: 1rem;
+  background: #e0e0e0;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+}
+
+.itemImage {
+  grid-column: 1;
+  grid-row: 1 / 3;
+  aspect-ratio: 1;
+  background-color: #f9f9f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  border-radius: 4px;
+}
+
+.itemImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.itemDetails {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.itemDetails h3 {
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+  color: #1a1a1a;
+  line-height: 1.4;
+}
+
+.itemPrice {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #666;
+}
+
+.itemActions {
+  grid-column: 2;
+  grid-row: 2;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.quantityControl {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.quantityControl button {
+  width: 32px;
+  height: 32px;
+  border: 1px solid #ddd;
+  background: white;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+}
+
+.quantityControl button:hover {
+  background: #f5f5f5;
+  border-color: #ff8c00;
+}
+
+.quantityControl input {
+  width: 60px;
+  height: 32px;
+  text-align: center;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 0.875rem;
+}
+
+.removeButton {
+  padding: 0.5rem 1rem;
+  background: transparent;
+  color: #d32f2f;
+  border: 1px solid #d32f2f;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.removeButton:hover {
+  background: #d32f2f;
+  color: white;
+}
+
+.itemTotal {
+  display: none;
+}
+
+/* Tablet */
+@media (min-width: 768px) {
+  .cartItem {
+    grid-template-columns: 120px 1fr auto auto;
+    gap: 1.5rem;
+  }
+
+  .itemImage {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .itemDetails {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .itemActions {
+    grid-column: 3;
+    grid-row: 1;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  .itemTotal {
+    display: block;
+    grid-column: 4;
+    grid-row: 1;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1a1a1a;
+  }
+
+  .itemDetails h3 {
+    font-size: 1rem;
+  }
+}
