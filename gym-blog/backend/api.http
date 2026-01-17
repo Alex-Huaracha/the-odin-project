@@ -1,0 +1,55 @@
+### Login
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "123456"
+}
+
+### Get Published Posts
+GET http://localhost:3000/api/posts
+
+### Create Post (Protected Route)
+POST http://localhost:3000/api/posts
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU5ZWM3ODljLTJhZWMtNDBlMy1iYmYzLTZlYzYzMDNhNGYxMSIsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE3NjM1ODI1MTcsImV4cCI6MTc2MzY2ODkxN30.SehLgWZpE7LpeOmq1ToKWi6IJUJGELSmQrD3IFxQwPw
+
+{
+  "title": "Probando ruta protegida",
+  "content": "Si lees esto, el middleware funcionó y decodificó mi ID.",
+  "published": true
+}
+
+### Update Post (Protected Route)
+PUT http://localhost:3000/api/posts/cd640869-7c54-49d7-ba4a-a0142d446848
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU5ZWM3ODljLTJhZWMtNDBlMy1iYmYzLTZlYzYzMDNhNGYxMSIsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE3NjM1ODI1MTcsImV4cCI6MTc2MzY2ODkxN30.SehLgWZpE7LpeOmq1ToKWi6IJUJGELSmQrD3IFxQwPw
+
+{
+  "title": "Actualizando a posteado ",
+  "content": "El middleware de verificación de token funciona correctamente.",
+  "published": true
+}
+
+### Delete Post (Protected Route)
+DELETE http://localhost:3000/api/posts/cd640869-7c54-49d7-ba4a-a0142d446848
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU5ZWM3ODljLTJhZWMtNDBlMy1iYmYzLTZlYzYzMDNhNGYxMSIsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE3NjM1ODI1MTcsImV4cCI6MTc2MzY2ODkxN30.SehLgWZpE7LpeOmq1ToKWi6IJUJGELSmQrD3IFxQwPw
+
+### Create Comment on Post
+POST http://localhost:3000/api/posts/59c73715-e72f-48e2-b1f8-3d8fccd39ff4/comments
+Content-Type: application/json
+
+{
+  "username": "gymFan123",
+  "content": "Great post! Really enjoyed reading it."
+}
+
+### Get All Posts (Admin Only, Protected Route)
+GET http://localhost:3000/api/posts/admin/all
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjNiMzQ3YmExLTg1YzItNDg3Ny04ZjRmLWUwMTFiYjEzNWRjMSIsInVzZXJuYW1lIjoiYWRtaW4iLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NjM1ODc1NTAsImV4cCI6MTc2MzY3Mzk1MH0.0WaMlorXBwKYfWHz0eT1Cfz885KHLazFzs9pM1NTnw0
+
+
+### Get Post by ID with Comments
+GET http://localhost:3000/api/posts/88cf110d-1de5-4112-9c44-80c26345df23
+
