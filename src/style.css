@@ -1,0 +1,556 @@
+:root {
+  --bg-hover: oklch(74.312% 0.16403 49.482);
+  --text-hover: oklch(0.15 0.05 25);
+
+  --sidebar: oklch(0.93 0.04 58 / 0.7);
+  --sidebar-foreground: oklch(0.15 0.05 25);
+  --sidebar-primary-foreground: oklch(0.98 0.02 65);
+  --sidebar-accent: oklch(0.88 0.06 55 / 0.5);
+  --sidebar-accent-foreground: oklch(0.15 0.05 25);
+  --sidebar-border: oklch(0.88 0.06 55 / 0.3);
+}
+
+body {
+  background: linear-gradient(120deg, #ffecd2 0%, #3e7fe7 100%);
+  font-family: 'Roboto', sans-serif;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.app-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.icon {
+  width: 1.2rem;
+  height: 1.2rem;
+  fill: currentColor;
+}
+
+.container {
+  width: 55vw;
+  height: 75vh;
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  grid-template-rows: 100%;
+  grid-template-areas: 'aside main';
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 32px 0 rgba(31, 38, 135, 0.15);
+}
+
+.glass-card {
+  background: var(--sidebar);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid var(--sidebar-border);
+}
+
+/* Sidebar */
+aside {
+  grid-area: aside;
+  padding: 1rem;
+  gap: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  width: 220px;
+}
+
+aside > h2 {
+  width: 100%;
+  text-align: center;
+}
+
+nav {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+
+.nav-btn {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.7rem;
+  width: 100%;
+  padding: 0.5rem 1rem;
+  background-color: transparent;
+  border: none;
+  border-radius: 100vmax;
+  cursor: pointer;
+  line-height: 1;
+  position: relative;
+}
+
+.nav-btn:hover {
+  background-color: var(--bg-hover);
+  color: var(--sidebar-primary-foreground);
+  font-weight: 600;
+}
+
+.nav-btn.active {
+  background-color: var(--bg-hover);
+  font-weight: bold;
+}
+
+.projects-section {
+  width: 100%;
+  border-top: 1px solid var(--sidebar-border);
+  padding-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.add-project-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
+  width: 100%;
+  margin-top: auto;
+  padding: 0.5rem 1rem;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.add-project-btn:hover {
+  border-bottom: 2px solid tomato;
+}
+
+/* Main */
+main {
+  grid-area: main;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.add-todo-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.add-todo-section {
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  margin-bottom: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.todo-form {
+  display: grid;
+  grid-template-columns: 2fr 2fr 1fr auto;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.add-todo-input,
+.add-todo-description,
+.add-todo-date {
+  padding: 0.75rem 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  color: #333;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+.add-todo-input:focus,
+.add-todo-description:focus,
+.add-todo-date:focus {
+  outline: none;
+  border-color: #ff8800;
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 0 3px rgba(255, 136, 0, 0.1);
+}
+
+.add-todo-input::placeholder,
+.add-todo-description::placeholder {
+  color: #888;
+}
+
+.add-todo-date {
+  color: #666;
+  cursor: pointer;
+}
+
+.add-todo-btn {
+  background-color: #ff8800;
+  border: none;
+  border-radius: 100vmax;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1rem;
+  gap: 0.5rem;
+}
+
+.add-todo-btn:hover {
+  background: linear-gradient(135deg, #ff6b00, #ff5500);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(255, 136, 0, 0.3);
+}
+
+.main-content {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+}
+
+.todo-item {
+  border-radius: 12px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  align-items: center;
+  gap: 1rem;
+  /* Glass effect */
+  background: rgba(13, 0, 255, 0.139);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid var(--sidebar-border);
+  transition: all 0.2s ease;
+}
+
+.todo-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.todo-item.completed {
+  opacity: 0.7;
+}
+
+.todo-item.priority {
+  border-left: 4px solid #ffc107;
+}
+
+/* Checkbox */
+.todo-checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: #ff8800;
+}
+
+.todo-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 0; /* Permite text truncation */
+}
+
+.todo-title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1b1b1b;
+  line-height: 1.2;
+}
+
+.todo-item.completed .todo-title {
+  text-decoration: line-through;
+  color: #888;
+}
+
+.todo-description {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.3;
+}
+
+.todo-item.completed .todo-description {
+  color: #999;
+}
+
+.priority-badge {
+  display: inline-block;
+  background-color: #ffc107;
+  color: #000;
+  font-size: 0.7rem;
+  font-weight: bold;
+  padding: 0.2rem 0.5rem;
+  border-radius: 12px;
+  margin-bottom: 0.25rem;
+  align-self: flex-start;
+}
+
+.todo-date-section {
+  display: flex;
+  align-items: center;
+  min-width: 80px;
+}
+
+.todo-date {
+  font-size: 0.8rem;
+  color: #000000;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.25rem 0.5rem;
+  border-radius: 8px;
+  white-space: nowrap;
+}
+
+.todo-actions {
+  display: flex;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.todo-item:hover .todo-actions {
+  opacity: 1;
+}
+
+.todo-actions > button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.todo-actions .icon {
+  width: 22px;
+  height: 22px;
+}
+
+.todo-actions > button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.1);
+}
+
+.priority-btn {
+  color: #ccc;
+}
+
+.priority-btn.priority-active {
+  color: #ffc107;
+}
+
+.priority-btn.priority-active .icon {
+  fill: #ffc107;
+}
+
+.edit-todo-btn:hover {
+  color: #3498db;
+}
+
+.delete-todo-btn:hover {
+  color: #e74c3c;
+}
+
+/* Modal styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.modal {
+  background: var(--sidebar, #fff);
+  padding: 2rem 1.5rem;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+  min-width: 300px;
+  max-width: 90vw;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.project-name-input {
+  flex: 1;
+  padding: 0.5rem 1rem;
+  background-color: transparent;
+  border: none;
+  border-bottom: 2px solid #ff8800;
+  box-shadow: 0 2px 0 0 #ff8800;
+  transition: box-shadow 0.3s ease;
+  font-size: 1rem;
+  outline: none;
+}
+
+.submit-project-btn,
+.close-modal-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+  width: 100%;
+  margin-top: auto;
+  padding: 0.5rem 1rem;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.submit-project-btn:hover,
+.close-modal-btn:hover {
+  border-bottom: 2px solid tomato;
+}
+
+/* Project Sidebar */
+.project-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.project-item:hover {
+  background-color: var(--bg-hover);
+  color: var(--sidebar-primary-foreground);
+  font-weight: 600;
+  border-radius: 100vmax;
+}
+
+.project-actions {
+  display: flex;
+  padding: 2px;
+  gap: 0.25rem;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.project-item:hover .project-actions {
+  opacity: 1;
+}
+
+.delete-project-btn,
+.edit-project-btn {
+  padding: 0.25rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  transition: background-color 0.2s ease;
+  border-radius: 50%;
+}
+
+.delete-project-btn:hover {
+  background-color: var(--primary-color, #3498db);
+  color: white;
+}
+
+.edit-project-btn:hover {
+  background-color: var(--primary-color, #3498db);
+  color: white;
+}
+
+/* Priority Badge */
+.priority-badge {
+  display: inline-block;
+  background-color: #ffc107;
+  color: #000;
+  font-size: 0.75rem;
+  font-weight: bold;
+  padding: 0.125rem 0.5rem;
+  border-radius: 12px;
+  margin-bottom: 0.25rem;
+}
+
+.priority-btn {
+  color: #ccc;
+  transition: color 0.2s ease;
+}
+
+.priority-btn.priority-active .icon {
+  fill: #ffc107;
+}
+
+.todo-item.priority {
+  border-left: 4px solid #ffc107;
+}
+
+.no-todos {
+  text-align: center;
+  color: #888;
+  font-style: italic;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  backdrop-filter: blur(8px);
+}
+
+.project-badge {
+  display: inline-block;
+  background-color: #6c757d;
+  color: white;
+  font-size: 0.7rem;
+  font-weight: bold;
+  padding: 0.2rem 0.5rem;
+  border-radius: 12px;
+  margin-bottom: 0.25rem;
+  margin-right: 0.5rem;
+  width: fit-content;
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  width: fit-content;
+  min-width: 300px;
+}
+
+.footer p {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+  color: #373232;
+  font-size: 0.875rem;
+}
+
+.footer a {
+  color: #000000;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  transition: color 0.2s ease;
+}
+
+.footer a:hover {
+  color: #ff6b00;
+}
+
+.footer .icon {
+  width: 16px;
+  height: 16px;
+}
