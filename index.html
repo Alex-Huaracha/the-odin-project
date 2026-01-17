@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rock Paper Scissors</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Rock Paper Scissors</h1>
+      <div class="score-board">
+        <div class="badge">
+          <div class="user-label">User</div>
+          <span>vs</span>
+          <div class="computer-label">Comp</div>
+        </div>
+        <div class="score">
+          <span id="user-score">0</span>:<span id="computer-score">0</span>
+        </div>
+      </div>
+
+      <div class="game-area">
+        <div class="player-section user-section">
+          <h2>Your Choice</h2>
+          <div class="choices">
+            <button class="choice" data-choice="rock">
+              <img src="./images/icons/rock.png" alt="Rock" />
+            </button>
+            <button class="choice" data-choice="paper">
+              <img src="./images/icons/paper.png" alt="Paper" />
+            </button>
+            <button class="choice" data-choice="scissors">
+              <img src="./images/icons/scissors.png" alt="Scissors" />
+            </button>
+          </div>
+        </div>
+
+        <div class="battle-result">
+          <div class="selected-choices">
+            <div class="selected-choice user-selected">
+              <span>You chose</span>
+              <div class="choice-display" id="user-display"></div>
+            </div>
+            <div class="selected-choice computer-selected">
+              <span>Computer chose</span>
+              <div class="choice-display" id="computer-display"></div>
+            </div>
+          </div>
+          <div class="round-result" id="round-result"></div>
+        </div>
+      </div>
+    </div>
+
+    <script src="./rockPaperScissors.js"></script>
+  </body>
+</html>
