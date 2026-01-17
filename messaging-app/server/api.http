@@ -1,0 +1,129 @@
+# @no-cookie-jar
+@baseUrl = http://localhost:3000/api
+
+### 1. Health Check
+GET http://localhost:3000/
+
+### -------------------------------------------------------
+### STEP 1: CREATE AND LOGIN USERS
+### -------------------------------------------------------
+
+### Create User A (dev_1)
+POST {{baseUrl}}/auth/signup
+Content-Type: application/json
+
+{
+  "username": "dev_1",
+  "password": "123456"
+}
+
+### Login User A (dev_1) -> Save their Token
+# @name loginUserA
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "username": "dev_1",
+  "password": "123456"
+}
+
+### Automatic variable for Token A
+# @tokenA = {{loginUserA.response.body.token}}
+@tokenA = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIwYzUxZDA3OS1lODNjLTRmZjItOWUwYi1jZDFjNmRhZWU2MDUiLCJ1c2VybmFtZSI6ImRldl8xIiwiaWF0IjoxNzYzOTMwMzA4LCJleHAiOjE3NjQwMTY3MDh9.yrAtnbfDZuB05OYLUPsM--LwWWll9ZXjg1mp3lqjWcE
+
+
+### Create User B (dev_2)
+POST {{baseUrl}}/auth/signup
+Content-Type: application/json
+
+{
+  "username": "dev_2",
+  "password": "123456"
+}
+
+### Login User B (dev_2) -> Save their Token
+# @name loginUserB
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "username": "dev_2",
+  "password": "123456"
+}
+
+### Automatic variable for Token B
+# @tokenB = {{loginUserB.response.body.token}}
+@tokenB = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxMjUzZDdjNS1iYjMyLTQ3NjEtOWMwMC1lNDY1OGMyYWM5NDkiLCJ1c2VybmFtZSI6ImRldl8yIiwiaWF0IjoxNzYzOTI5ODEzLCJleHAiOjE3NjQwMTYyMTN9.vbQxNqECKWfNyef-6Ho4s86rmlBkttLVCXqh4KOJPc0
+
+
+### -------------------------------------------------------
+### STEP 2: GET THE IDs (Manual step required)
+### -------------------------------------------------------
+
+### List users (Do this with Token A)
+# LOOK AT THE JSON RESPONSE ON THE RIGHT AND COPY THE IDs
+# Cookie Dev 1
+GET {{baseUrl}}/users
+Cookie: jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIwYzUxZDA3OS1lODNjLTRmZjItOWUwYi1jZDFjNmRhZWU2MDUiLCJ1c2VybmFtZSI6ImRldl8xIiwiaWF0IjoxNzYzOTMwMzA4LCJleHAiOjE3NjQwMTY3MDh9.yrAtnbfDZuB05OYLUPsM--LwWWll9ZXjg1mp3lqjWcE
+
+#### Cookie Dev 2
+GET {{baseUrl}}/users
+Cookie: jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxMjUzZDdjNS1iYjMyLTQ3NjEtOWMwMC1lNDY1OGMyYWM5NDkiLCJ1c2VybmFtZSI6ImRldl8yIiwiaWF0IjoxNzYzOTMwNDg4LCJleHAiOjE3NjQwMTY4ODh9.xEBuHPFzTnr5jzJgtq5HL93fNAoLfmaL7Z6TjzMiTRM
+
+### -------------------------------------------------------
+### CONVERSATION CONFIGURATION
+### -------------------------------------------------------
+# IMPORTANT: Copy and paste the real IDs you obtained above 👇
+
+@id_UserA = 0c51d079-e83c-4ff2-9e0b-cd1c6daee605
+@id_UserB = 1253d7c5-bb32-4761-9c00-e4658c2ac949
+
+
+### -------------------------------------------------------
+### STEP 3: THE SIMULATED CHAT!
+### -------------------------------------------------------
+
+### 1. User A sends a message to User B
+POST {{baseUrl}}/messages
+Cookie: jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIwYzUxZDA3OS1lODNjLTRmZjItOWUwYi1jZDFjNmRhZWU2MDUiLCJ1c2VybmFtZSI6ImRldl8xIiwiaWF0IjoxNzYzOTMxODM0LCJleHAiOjE3NjQwMTgyMzR9.PmXhWJ-kgCke7UZ2xmdmbtvD6s5GNPjSD_5mPmjsFYo
+Content-Type: application/json
+
+{
+  "receiverId": "{{id_UserB}}",
+  "content": "Hi dev_2! Are you there? 📡"
+}
+
+### 2. User B REPLIES to User A (Note the TokenB)
+POST {{baseUrl}}/messages
+Cookie: jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxMjUzZDdjNS1iYjMyLTQ3NjEtOWMwMC1lNDY1OGMyYWM5NDkiLCJ1c2VybmFtZSI6ImRldl8yIiwiaWF0IjoxNzYzOTMxODYwLCJleHAiOjE3NjQwMTgyNjB9.GBBkLT65J4vrRYeXFAHK8zhEFrmldH36rBPIHcqTllk
+Content-Type: application/json
+
+{
+  "receiverId": "{{id_UserA}}",
+  "content": "Hi dev_1! Yes, I can hear you loud and clear. The backend worked 🎉"
+}
+
+### 3. User A replies again
+POST {{baseUrl}}/messages
+Cookie: jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIwYzUxZDA3OS1lODNjLTRmZjItOWUwYi1jZDFjNmRhZWU2MDUiLCJ1c2VybmFtZSI6ImRldl8xIiwiaWF0IjoxNzYzOTMxODM0LCJleHAiOjE3NjQwMTgyMzR9.PmXhWJ-kgCke7UZ2xmdmbtvD6s5GNPjSD_5mPmjsFYo
+Content-Type: application/json
+
+{
+  "receiverId": "{{id_UserB}}",
+  "content": "Great, now we can see the full history."
+}
+
+### -------------------------------------------------------
+### STEP 4: SEE THE FINAL RESULT
+### -------------------------------------------------------
+
+### View the conversation from A's (dev_1) perspective
+# You should see all 3 messages in chronological order
+GET {{baseUrl}}/messages/{{id_UserB}}
+Cookie: jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIwYzUxZDA3OS1lODNjLTRmZjItOWUwYi1jZDFjNmRhZWU2MDUiLCJ1c2VybmFtZSI6ImRldl8xIiwiaWF0IjoxNzYzOTMxODM0LCJleHAiOjE3NjQwMTgyMzR9.PmXhWJ-kgCke7UZ2xmdmbtvD6s5GNPjSD_5mPmjsFYo
+
+### View the conversation from B's (dev_2) perspective
+# You should see exactly the same
+GET {{baseUrl}}/messages/{{id_UserA}}
+Cookie: jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxMjUzZDdjNS1iYjMyLTQ3NjEtOWMwMC1lNDY1OGMyYWM5NDkiLCJ1c2VybmFtZSI6ImRldl8yIiwiaWF0IjoxNzYzOTMxODYwLCJleHAiOjE3NjQwMTgyNjB9.GBBkLT65J4vrRYeXFAHK8zhEFrmldH36rBPIHcqTllk
+
