@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Library</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="container">
+      <header>
+        <img src="icons/library.svg" alt="Library Icon" />
+        <h1>My Library</h1>
+        <button id="add-book">Add Book</button>
+      </header>
+      <section class="book-list">
+        <div class="column" id="not-read-column">
+          <h3>Not Read Yet</h3>
+          <div class="books"></div>
+        </div>
+        <div class="column" id="reading-column">
+          <h3>Reading</h3>
+          <div class="books"></div>
+        </div>
+        <div class="column" id="read-column">
+          <h3>Read</h3>
+          <div class="books"></div>
+        </div>
+      </section>
+    </main>
+    <!-- Modal -->
+    <div id="modal" class="modal hidden">
+      <div class="modal-content">
+        <button class="close-button" id="close-modal">
+          <img src="icons/close-icon.svg" alt="Close form icon" />
+        </button>
+        <h2>Add a New Book</h2>
+        <form id="book-form" novalidate>
+          <div class="form-group">
+            <label for="title">Title</label>
+            <input
+              type="text"
+              id="title"
+              name="title"
+              required
+              minlength="2"
+              maxlength="100"
+            />
+          </div>
+          <div class="form-group">
+            <label for="author">Author</label>
+            <input
+              type="text"
+              id="author"
+              name="author"
+              required
+              minlength="2"
+              maxlength="50"
+            />
+          </div>
+          <div class="form-group">
+            <label for="pages">Pages</label>
+            <input
+              type="number"
+              id="pages"
+              name="pages"
+              required
+              min="1"
+              max="10000"
+            />
+          </div>
+          <div class="form-group">
+            <label for="read-status">Read Status</label>
+            <select id="read-status" name="read-status">
+              <option value="not-read">Not Read</option>
+              <option value="reading">Reading</option>
+              <option value="read">Read</option>
+            </select>
+          </div>
+          <button type="submit">Save</button>
+        </form>
+      </div>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>
