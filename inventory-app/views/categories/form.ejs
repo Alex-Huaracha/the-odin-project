@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <h1>Inventory Management System</h1>
+      </nav>
+    </header>
+
+    <% const isEditing = typeof category !== 'undefined' && category !== null %>
+    <% const formAction = isEditing ? `/catalog/category/${category.id}/update`
+    : '/catalog/category/create' %>
+
+    <main class="container">
+      <div class="form-container">
+        <h2><%= isEditing ? 'Edit Category' : 'Create New Category' %></h2>
+
+        <% if (typeof errors !== 'undefined' && errors && errors.length > 0) {
+        %>
+        <div class="error-messages">
+          <% errors.forEach(error => { %>
+          <p class="error"><%= error.msg %></p>
+          <% }) %>
+        </div>
+        <% } %>
+
+        <form action="<%= formAction %>" method="POST" class="form">
+          <div class="form-group">
+            <label for="name">Category Name *</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              value="<%= isEditing && category.name ? category.name : '' %>"
+              required
+              class="form-input"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="description">Description</label>
+            <textarea
+              id="description"
+              name="description"
+              rows="4"
+              class="form-input"
+            >
+<%= isEditing && category.description ? category.description : '' %></textarea
+            >
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">
+              <%= isEditing ? 'Update Category' : 'Create Category' %>
+            </button>
+            <a href="/catalog/categories" class="btn btn-secondary">Cancel</a>
+          </div>
+        </form>
+      </div>
+    </main>
+
+    <footer>
+      <p>&copy; 2025 Inventory App | NodeJS Course Project</p>
+    </footer>
+  </body>
+</html>

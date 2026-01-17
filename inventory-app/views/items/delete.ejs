@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <h1>Inventory Management System</h1>
+      </nav>
+    </header>
+
+    <main class="container">
+      <div class="delete-container">
+        <div class="warning-card">
+          <h2>Delete Item: <%= item.name %></h2>
+
+          <div class="warning-message">
+            <p>
+              <strong>Warning:</strong> You are about to delete this item
+              permanently.
+            </p>
+            <p>This action cannot be undone.</p>
+          </div>
+
+          <div class="detail-info">
+            <p><strong>Name:</strong> <%= item.name %></p>
+            <% if (item.description) { %>
+            <p><strong>Description:</strong> <%= item.description %></p>
+            <% } %> <% if (item.price) { %>
+            <p><strong>Price:</strong> $<%= item.price %></p>
+            <% } %> <% if (item.stock !== null && item.stock !== undefined) { %>
+            <p><strong>Stock:</strong> <%= item.stock %> units</p>
+            <% } %>
+          </div>
+
+          <% if (typeof error !== 'undefined' && error) { %>
+          <div class="error-messages">
+            <p class="error"><%= error %></p>
+          </div>
+          <% } %>
+
+          <form
+            action="/catalog/item/<%= item.id %>/delete"
+            method="POST"
+            class="delete-form"
+          >
+            <div class="form-actions">
+              <button type="submit" class="btn btn-danger">
+                Confirm Delete
+              </button>
+              <a href="/catalog/item/<%= item.id %>" class="btn btn-secondary"
+                >Cancel</a
+              >
+            </div>
+          </form>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <p>&copy; 2025 Inventory App | NodeJS Course Project</p>
+    </footer>
+  </body>
+</html>

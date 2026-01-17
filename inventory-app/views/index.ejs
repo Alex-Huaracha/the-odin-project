@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Inventory App - Home</title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <h1>Inventory Management System</h1>
+      </nav>
+    </header>
+
+    <main class="container">
+      <section class="welcome">
+        <h2>Welcome to Your Inventory</h2>
+        <p>Manage your products and categories efficiently</p>
+      </section>
+
+      <section class="dashboard">
+        <div class="card">
+          <h3>Categories</h3>
+          <p>Browse and manage product categories</p>
+          <div class="card-actions">
+            <a href="/catalog/categories" class="btn btn-primary"
+              >View All Categories</a
+            >
+            <a href="/catalog/category/create" class="btn btn-secondary"
+              >Add New Category</a
+            >
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Items</h3>
+          <p>Browse and manage inventory items</p>
+          <div class="card-actions">
+            <a href="/catalog/items" class="btn btn-primary">View All Items</a>
+            <a href="/catalog/item/create" class="btn btn-secondary"
+              >Add New Item</a
+            >
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>&copy; 2025 Inventory App | NodeJS Course Project</p>
+    </footer>
+  </body>
+</html>

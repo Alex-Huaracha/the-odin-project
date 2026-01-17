@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <h1>Inventory Management System</h1>
+      </nav>
+    </header>
+
+    <main class="container">
+      <div class="page-header">
+        <h2>All Items</h2>
+        <a href="/catalog/item/create" class="btn btn-secondary"
+          >Add New Item</a
+        >
+      </div>
+
+      <% if (items && items.length > 0) { %>
+      <div class="list-grid">
+        <% items.forEach(item => { %>
+        <div class="card">
+          <h3><%= item.name %></h3>
+          <% if (item.description) { %>
+          <p><%= item.description %></p>
+          <% } %> <% if (item.price) { %>
+          <p class="item-price">$<%= item.price %></p>
+          <% } %> <% if (item.stock !== null && item.stock !== undefined) { %>
+          <p>Stock: <%= item.stock %></p>
+          <% } %>
+          <div class="card-actions">
+            <a href="/catalog/item/<%= item.id %>" class="btn btn-primary"
+              >View Details</a
+            >
+          </div>
+        </div>
+        <% }) %>
+      </div>
+      <% } else { %>
+      <div class="empty-state">
+        <p>No items found. Create your first item!</p>
+        <a href="/catalog/item/create" class="btn btn-secondary">Add Item</a>
+      </div>
+      <% } %>
+
+      <div class="back-link">
+        <a href="/">&larr; Back to Home</a>
+      </div>
+    </main>
+
+    <footer>
+      <p>&copy; 2025 Inventory App | NodeJS Course Project</p>
+    </footer>
+  </body>
+</html>
