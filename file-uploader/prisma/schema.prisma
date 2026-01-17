@@ -1,0 +1,70 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       String @id @default(uuid())
+  username String @unique
+  password String
+
+  folders    Folder[]
+  files      File[]
+  shareLinks ShareLink[]
+}
+
+model Session {
+  id        String   @id
+  sid       String   @unique
+  data      String
+  expiresAt DateTime
+}
+
+model Folder {
+  id        String   @id @default(uuid())
+  name      String
+  createdAt DateTime @default(now())
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+
+  parent   Folder? @relation("NestedFolders", fields: [parentId], references: [id], onDelete: Cascade)
+  parentId String?
+
+  children   Folder[]    @relation("NestedFolders")
+  files      File[]
+  shareLinks ShareLink[]
+}
+
+model File {
+  id        String   @id @default(uuid())
+  name      String
+  size      Int
+  mimetype  String
+  createdAt DateTime @default(now())
+
+  storageId String
+  url       String
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+
+  folder   Folder? @relation(fields: [folderId], references: [id], onDelete: Cascade)
+  folderId String?
+}
+
+model ShareLink {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  expiresAt DateTime
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+
+  folder   Folder @relation(fields: [folderId], references: [id], onDelete: Cascade)
+  folderId String
+}
